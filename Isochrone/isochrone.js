@@ -1,8 +1,8 @@
-importScripts('latlng.js')
+importScripts('/latlng.js')
 
 setup(async () => ({
     name: 'Isochrone',
-    version: '1.0.0',
+    version: '1.0.1',
     description: 'Calculate isochrone'
 }))
 
