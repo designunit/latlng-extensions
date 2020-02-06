@@ -17,7 +17,7 @@ command('Isochrone', async () => {
         return
     }
 
-    const [lng, lat] = await requestPoint()
+    const {lng, lat} = await requestPoint()
     const answer = await requestInput([
         ['intervals', 5],
         ['radius', 1],
