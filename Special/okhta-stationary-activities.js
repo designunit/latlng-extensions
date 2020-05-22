@@ -29,12 +29,12 @@ on('install', async event => {
 on('idle', async event => {
     await toolbar([
         ['AddIdea', {
-            label: 'Предложить идею',
-            icon: 'bulb',
-            color: '#FFD166',
+            icon: 'plus',
+            label: 'Добавить',
+            //color: '#FFD166',
         }],
     ], {
-        foldedLabel: 'Добавить',
+        //foldedLabel: 'Добавить',
     })
 })
 
@@ -135,7 +135,7 @@ async function AddFeature() {
         ]]],
 
         // Движение / спорт:
-        ['static', ['select', { label: 'Движение / спорт', }, [
+        ['sport-or-moving', ['select', { label: 'Движение / спорт', }, [
             ['option', { value: 'Решительно / целенаправленно идут транзитом' }],
             ['option', { value: 'Прогуливаются' }],
             ['option', { value: 'бегают / занимаются скандинавской ходьбой' }],
@@ -143,10 +143,10 @@ async function AddFeature() {
         ]]],
 
         // Движение / спорт:
-        ['static', ['input', { label: 'Другой спорт', }]],
+        ['sport-other', ['input', { label: 'Другой спорт', }]],
 
         // Занятия:
-        ['static', ['select', { label: 'Занятия', }, [
+        ['activity', ['select', { label: 'Занятия', }, [
             ['option', { value: 'Выгуливают собаку' }],
             ['option', { value: 'Устраивают пикник ' }],
             ['option', { value: 'Жарят шашлык' }],
