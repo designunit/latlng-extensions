@@ -51,11 +51,9 @@ on('feature.select', async event => {
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
-    const type = feature.properties['type']
     const title = 'Активность'
-    const moving = feature.properties['moving']
-    const sport = feature.properties['sport-other']
     const activity = feature.properties['activity']
+    const moving = feature.properties['moving']
     const groupSize = feature.properties['groupSize']
     const comment = feature.properties['comment']
 
@@ -70,11 +68,20 @@ on('feature.select', async event => {
         raw
     )
 
-    await showMapPopup(feature.geometry.coordinates, ['html', {
-        html, style: {
-            padding: 16,
-        }
+    await showMapPopup(feature.geometry.coordinates, ['kv', {
+        data: [
+            {key: 'activity', value: activity},
+            {key: 'moving', value: moving},
+            {key: 'group size', value: groupSize},
+            {key: 'comment', value: comment},
+        ]
     }])
+
+    // await showMapPopup(feature.geometry.coordinates, ['html', {
+    //     html, style: {
+    //         padding: 16,
+    //     }
+    // }])
 })
 
 command("AddIdea", async ctx => {
