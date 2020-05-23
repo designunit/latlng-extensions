@@ -53,6 +53,10 @@ on('feature.select', async event => {
 
     const type = feature.properties['type']
     const title = 'Активность'
+    const moving = feature.properties['moving']
+    const sport = feature.properties['sport-other']
+    const activity = feature.properties['activity']
+    const groupSize = feature.properties['groupSize']
     const comment = feature.properties['comment']
 
     const md = new markdownit()
@@ -136,18 +140,14 @@ async function AddFeature() {
 
         // Занятия:
         ['activity', ['select', { label: 'Занятия', }, [
-            ['option', { value: 'Выгуливают собаку' }],
-            ['option', { value: 'Устраивают пикник' }],
-            ['option', { value: 'Жарят шашлык' }],
-            ['option', { value: 'Кормят / наблюдают птиц' }],
-            ['option', { value: 'Взаимодействуют с водой (трогают, кидают что-то)' }],
-            ['option', { value: 'Рыбачат' }],
-            ['option', { value: 'Катаются на лодке' }],
-            ['option', { value: 'Катаются на каяке' }],
-            ['option', { value: 'Катаются на сапе' }],
-            ['option', { value: 'Катаются на катере' }],
+            ['option', { value: 'выгуливают собаку' }],
+            ['option', { value: 'устраивают пикник' }],
+            ['option', { value: 'жарят шашлык' }],
+            ['option', { value: 'рыбачат' }],
+            ['option', { value: 'кормят или наблюдают за птицами' }],
+            ['option', { value: 'взаимодействуют с водой' }],
+            ['option', { value: 'катаются на лодке, сапе и тд.' }],
         ]]],
-
 
         // Движение / спорт:
         ['moving', ['select', { label: 'Движение / спорт', }, [
@@ -156,13 +156,11 @@ async function AddFeature() {
             ['option', { value: 'бег' }],
             ['option', { value: 'скандинавская ходьба' }],
             ['option', { value: 'катаются на велосипеде' }],
-            ['option', { value: 'катаются самокате' }],
-            ['option', { value: 'катаются скейте' }],
-            ['option', { value: 'катаются роликах' }],
+            ['option', { value: 'катаются на самокате, скейте, роликах' }],
         ]]],
 
         // Движение / спорт:
-        ['sport-other', ['input', { label: 'Другой спорт' }]],
+        // ['sport-other', ['input', { label: 'Другой спорт' }]],
 
         // Количество
         ['groupSize', ['input', { label: 'Количество' }]],
