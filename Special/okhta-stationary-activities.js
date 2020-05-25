@@ -146,7 +146,7 @@ async function AddFeature() {
         // ]]],
 
         // Занятия:
-        ['static', ['select', { label: 'Занятия', }, [
+        ['static', ['select', { label: 'Статические активности', }, [
             ['option', {value: 'стоят разговаривают'}],
             ['option', {value: 'стоят любуются'}],
             ['option', {value: 'стоят выпивают'}],
@@ -169,7 +169,7 @@ async function AddFeature() {
         ]]],
 
         // Движение / спорт:
-        ['moving', ['select', { label: 'Движение / спорт', }, [
+        ['moving', ['select', { label: 'Динамические активности', }, [
             ['option', { value: 'идут транзитом' }],
             ['option', { value: 'идут прогуливаются' }],
             ['option', { value: 'идут домой' }],
