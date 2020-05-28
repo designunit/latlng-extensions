@@ -146,7 +146,7 @@ async function AddFeature() {
         // ]]],
 
         // Занятия:
-        ['static', ['select', { label: 'Статические активности', }, [
+        ['static', ['select', { label: 'Статические активности', mode: 'multiple' }, [
             ['option', {value: 'стоят разговаривают'}],
             ['option', {value: 'стоят любуются'}],
             ['option', {value: 'стоят выпивают'}],
@@ -169,7 +169,7 @@ async function AddFeature() {
         ]]],
 
         // Движение / спорт:
-        ['moving', ['select', { label: 'Динамические активности', }, [
+        ['moving', ['select', { label: 'Динамические активности', mode: 'multiple' }, [
             ['option', { value: 'идут транзитом' }],
             ['option', { value: 'идут прогуливаются' }],
             ['option', { value: 'идут домой' }],
@@ -185,6 +185,8 @@ async function AddFeature() {
             ['option', { value: 'собирают цветы' }],
         ]]],
 
+        // Количество
+        ['groupSize', ['input', { label: 'Количество' }]],
 
         // "Пол": (у каждого пола вываливается простыня возраст):
         ['male', ['select', { label: 'М', }, [
@@ -206,9 +208,6 @@ async function AddFeature() {
         ]]],
         // Движение / спорт:
         // ['sport-other', ['input', { label: 'Другой спорт' }]],
-
-        // Количество
-        ['groupSize', ['input', { label: 'Количество' }]],
 
         ['comment', ['text', {
             label: 'Комментарий',
