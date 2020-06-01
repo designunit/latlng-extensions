@@ -70,10 +70,10 @@ on('feature.select', async event => {
 
     await showMapPopup(feature.geometry.coordinates, ['kv', {
         data: [
-            {key: 'activity', value: activity},
-            {key: 'moving', value: moving},
-            {key: 'group size', value: groupSize},
-            {key: 'comment', value: comment},
+            { key: 'activity', value: activity },
+            { key: 'moving', value: moving },
+            { key: 'group size', value: groupSize },
+            { key: 'comment', value: comment },
         ]
     }])
 
@@ -139,75 +139,79 @@ async function AddFeature() {
 
     const title = 'Активность'
     const form = await requestInput([
-        // // Статичные:
-        // ['static', ['select', { label: 'Статичные', }, [
-        //     ['option', { value: 'Сидят' }],
-        //     ['option', { value: 'Стоят' }],
-        // ]]],
-
-        // Занятия:
-        ['static', ['select', { label: 'Статические активности', mode: 'multiple' }, [
-            ['option', {value: 'стоят разговаривают'}],
-            ['option', {value: 'стоят любуются'}],
-            ['option', {value: 'стоят выпивают'}],
-            ['option', {value: 'стоят курят'}],
-            ['option', {value: 'сидят разговаривают'}],
-            ['option', {value: 'сидят любуются'}],
-            ['option', {value: 'сидят выпивают'}],
-            ['option', {value: 'сидят курят'}],
-            ['option', {value: 'сидят читают'}],
-            ['option', {value: 'стоят / сидят слушают музыку группой'}],
-            ['option', {value: 'устраивают пикник'}],
-            ['option', {value: 'жарят шашлык'}],
-            ['option', { value: 'кормят или наблюдают за птицами' }],
-            ['option', {value: 'взаимодействуют с водой'}],
-            ['option', {value: 'рыбачат'}],
-            ['option', {value: 'спорт статичный'}],
-            ['option', {value: 'фотографируют/ся'}],
-            ['option', {value: 'справляют нужду'}],
-            ['option', {value: 'чинят машину'}],
-        ]]],
-
-        // Движение / спорт:
-        ['moving', ['select', { label: 'Динамические активности', mode: 'multiple' }, [
-            ['option', { value: 'идут транзитом' }],
-            ['option', { value: 'идут прогуливаются' }],
-            ['option', { value: 'идут домой' }],
-            ['option', { value: 'идут выбросить мусор' }],
-            ['option', { value: 'гуляют с собакой' }],
-            ['option', { value: 'гуляют с ребенком (ребенок пешком)' }],
-            ['option', { value: 'гуляют с коляской' }],
-            ['option', { value: 'катаются на велосипеде' }],
-            ['option', { value: 'катаются на самокате, скейте, роликах' }],
-            ['option', { value: 'катаются на лодке / каяке / сапе / катере' }],
-            ['option', { value: 'бег' }],
-            ['option', { value: 'скандинавская ходьба' }],
-            ['option', { value: 'собирают цветы' }],
-        ]]],
-
         // Количество
         ['groupSize', ['input', { label: 'Количество' }]],
 
         // "Пол": (у каждого пола вываливается простыня возраст):
-        ['male', ['select', { label: 'М', }, [
+        ['male', ['select', { label: 'М', mode: 'multiple' }, [
             ['option', { value: 'молодежь (18-30)' }],
-            ['option', { value: 'взрослый 30-50 лет' }],
+            ['option', { value: 'взрослый (30-50)' }],
             ['option', { value: 'пенсионного возраста' }],
         ]]],
-        ['female', ['select', { label: 'Ж', }, [
+        ['female', ['select', { label: 'Ж', mode: 'multiple' }, [
             ['option', { value: 'молодежь (18-30)' }],
-            ['option', { value: 'взрослый 30-50 лет' }],
+            ['option', { value: 'взрослый (30-50)' }],
             ['option', { value: 'пенсионного возраста' }],
         ]]],
-        ['child', ['select', { label: 'Ребенок', }, [
+        ['child', ['select', { label: 'Ребенок', mode: 'multiple' }, [
             ['option', { value: 'ребенок в коляске' }],
             ['option', { value: 'ребенок 1-2 лет' }],
             ['option', { value: 'ребенок дошкольного возраста (3-6)' }],
-            ['option', { value: 'ребенок младшего/среднего школьного (7 -13)' }],
+            ['option', { value: 'ребенок младшего/среднего школьного (7-13)' }],
             ['option', { value: 'подростки (14-18)' }],
         ]]],
+
+        // Занятия:
+        ['static', ['select', { label: 'Статические активности', mode: 'tags' }, [
+            ['option', { value: 'стоят' }],
+            ['option', { value: 'сидят' }],
+            ['option', { value: 'разговаривают' }],
+            ['option', { value: 'любуются' }],
+            ['option', { value: 'выпивают' }],
+            ['option', { value: 'курят' }],
+            ['option', { value: 'читают' }],
+            ['option', { value: 'слушают музыку группой' }],
+            ['option', { value: 'устраивают пикник' }],
+            ['option', { value: 'жарят шашлык' }],
+            ['option', { value: 'кормят птиц' }],
+            ['option', { value: 'наблюдают за птицами' }],
+            ['option', { value: 'взаимодействуют с водой' }],
+            ['option', { value: 'рыбачат' }],
+            ['option', { value: 'спорт' }],
+            ['option', { value: 'фотографируют/ся' }],
+            ['option', { value: 'справляют нужду' }],
+            ['option', { value: 'чинят машину' }],
+        ]]],
+
         // Движение / спорт:
-        // ['sport-other', ['input', { label: 'Другой спорт' }]],
+        ['moving', ['select', { label: 'Динамические активности', mode: 'tags' }, [
+            ['option', { value: 'идут транзитом' }],
+            ['option', { value: 'идут прогуливаются' }],
+            ['option', { value: 'идут домой' }],
+            ['option', { value: 'идут выбросить мусор' }],
+            ['option', { value: 'гуляют' }],
+            ['option', { value: 'бег' }],
+            ['option', { value: 'с собакой' }],
+            ['option', { value: 'с ребенком (ребенок пешком)' }],
+            ['option', { value: 'с коляской' }],
+            ['option', { value: 'катаются' }],
+            ['option', { value: 'велосипед' }],
+            ['option', { value: 'самокат' }],
+            ['option', { value: 'скейт, роликах' }],
+            ['option', { value: 'ролики' }],
+            ['option', { value: 'катаются на лодке' }],
+            ['option', { value: 'катаются на каяке' }],
+            ['option', { value: 'катаются на сапе' }],
+            ['option', { value: 'катаются на катере' }],
+            ['option', { value: 'скандинавская ходьба' }],
+            ['option', { value: 'собирают цветы' }],
+        ]]],
+
+        // Day
+        ['day', ['select', { label: 'День недели' }, [
+            ['option', { value: 'будний' }],
+            ['option', { value: 'выходной' }],
+        ]]],
 
         ['comment', ['text', {
             label: 'Комментарий',
