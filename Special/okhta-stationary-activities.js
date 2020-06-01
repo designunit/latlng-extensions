@@ -52,10 +52,13 @@ on('feature.select', async event => {
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
     const title = 'Активность'
-    const activity = feature.properties['activity']
+    const static = feature.properties['static']
     const moving = feature.properties['moving']
     const groupSize = feature.properties['groupSize']
     const comment = feature.properties['comment']
+    const male = feature.properties['male']
+    const female = feature.properties['female']
+    const child = feature.properties['child']
 
     const md = new markdownit()
     const raw = md.render([
@@ -68,13 +71,26 @@ on('feature.select', async event => {
         raw
     )
 
+    function getValue(value) {
+        if (Array.isArray(value)) {
+            return value.join(', ')
+        }
+
+        return value
+    }
+
     await showMapPopup(feature.geometry.coordinates, ['kv', {
         data: [
-            { key: 'activity', value: activity },
-            { key: 'moving', value: moving },
-            { key: 'group size', value: groupSize },
-            { key: 'comment', value: comment },
-        ]
+            { key: 'Количество', value: groupSize },
+            { key: 'М', value: getValue(male) },
+            { key: 'Ж', value: getValue(female) },
+            { key: 'Ребенок', value: getValue(child) },
+
+            { key: 'Занятия', value: getValue(static) },
+            { key: 'Движение', value: getValue(moving) },
+
+            { key: 'Комментарий', value: comment },
+        ].filter(({ value }) => Boolean(value))
     }])
 
     // await showMapPopup(feature.geometry.coordinates, ['html', {
