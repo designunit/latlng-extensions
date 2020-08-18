@@ -8,8 +8,14 @@ setup(async () => ({
 
 command('Isochrone', async () => {
     const layerId = await requestState('app.currentLayerId')
-    const geometryType = await requestState(`layers.data.${layerId}.geometryType`)
 
+    const sourceId = await requestState(`layers.data.${layerId}.sourceId`)
+    if(!sourceId){
+        await notifyError('Source is not specified for current layer')
+        return
+    }
+
+    const geometryType = await requestState(`sources.data.${sourceId}.geometryType`)
     if (geometryType !== 'Polygon') {
         await notifyError('Cannot create isochrone on non Polygon layer')
         return
