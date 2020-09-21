@@ -222,6 +222,8 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     const date = new Date()
     const properties = {
         comment: form.comment,
+        category: form.category,
+        contact: form.contact,
         dateAdded: date.toString(),
         type,
     }
