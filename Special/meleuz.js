@@ -11,6 +11,12 @@ const typeLabel = new Map([
     ['nice', 'Ценность'],
 ])
 
+const colors = new Map([
+    [ 'idea', '#f9b00c' ],
+    [ 'nice', '#2cb6b4' ],
+    [ 'problem', '#f01e05' ],
+])
+
 setup(async () => {
     // const layerId = await requestLayer({
     // 	geometryTypes: ['Point']
@@ -49,17 +55,17 @@ on('idle', async event => {
         ['AddIdea', {
             label: 'Предложить идею',
             icon: 'bulb',
-            color: '#FFD166',
+            color: colors.get('idea'),
         }],
         ['AddNice', {
             label: 'Описать ценность',
             icon: 'like',
-            color: '#4DCCBD',
+            color: colors.get('nice'),
         }],
         ['AddProblem', {
             label: 'Описать проблему',
             icon: 'dislike',
-            color: '#F25C63',
+            color: colors.get('problem'),
         }],
     ], {
         foldedLabel: 'Добавить',
