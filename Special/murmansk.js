@@ -10,6 +10,11 @@ const typeLabel = new Map([
     ['problem', 'Проблема'],
     ['nice', 'Ценность'],
 ])
+const buttonLabel = new Map([
+    ['idea', 'Предложить идею'],
+    ['problem', 'Описать проблему'],
+    ['nice', 'Описать ценность'],
+])
 const colors = new Map([
     ['idea', '#FFD166'],
     ['nice', '#4DCCBD'],
@@ -52,17 +57,17 @@ on('install', async event => {
 on('idle', async event => {
     await toolbar([
         ['AddIdea', {
-            label: 'Предложить идею',
+            label: buttonLabel.get('idea'),
             icon: 'bulb',
             color: colors.get('idea'),
         }],
         ['AddNice', {
-            label: 'Описать ценность',
+            label: buttonLabel.get('nice'),
             icon: 'like',
             color: colors.get('nice'),
         }],
         ['AddProblem', {
-            label: 'Описать проблему',
+            label: buttonLabel.get('problem'),
             icon: 'dislike',
             color: colors.get('problem'),
         }],
