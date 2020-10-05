@@ -11,7 +11,7 @@ const typeLabel = new Map([
     ['goodview', 'Хороший вид на воду'],
 ])
 const buttonLabel = new Map([
-    ['idea', 'Предложить территори'],
+    ['idea', 'Предложить территории'],
     ['badview', 'Плохой вид на воду'],
     ['goodview', 'Хороший вид на воду'],
 ])
