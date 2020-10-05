@@ -11,9 +11,9 @@ const typeLabel = new Map([
     ['nice', 'Ценность'],
 ])
 const buttonLabel = new Map([
-    ['idea', 'Предложить идею'],
-    ['problem', 'Описать проблему'],
-    ['nice', 'Описать ценность'],
+    ['idea', 'Предложить территори'],
+    ['problem', 'Плохой вид на воду'],
+    ['nice', 'Хороший вид на воду'],
 ])
 const colors = new Map([
     ['idea', '#FFD166'],
