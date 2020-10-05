@@ -15,6 +15,7 @@ const buttonLabel = new Map([
     ['problem', 'Плохой вид на воду'],
     ['nice', 'Хороший вид на воду'],
 ])
+
 const colors = new Map([
     ['idea', '#FFD166'],
     ['nice', '#4DCCBD'],
@@ -36,22 +37,22 @@ setup(async () => {
 })
 
 on('install', async event => {
-    //overlay([
-    // ['@', 'top-left', [
-    //     ['button', { icon: 'arrow-left', href: PERMALINK }],
-    //     // ['html', {
-    //     //     html: '<a style="background:white;padding:2px 5px;" href="https://берегурай.рф">← на сайт берегурай.рф</a>',
-    //     // }],
-    // ]],
-    // ['@', 'top-center', [
-    //     ['html', { html: '<h1 style="margin:0;">ПИТКЯРАНТА</h1>' }],
-    // ]],
-    //   ['@', 'right-center', [
-    //      ['button', { icon: 'question', command: 'ShowHelp' }],
-    // ]],
-    //])
+    overlay([
+        // ['@', 'top-left', [
+        //     ['button', { icon: 'arrow-left', href: PERMALINK }],
+        //     // ['html', {
+        //     //     html: '<a style="background:white;padding:2px 5px;" href="https://берегурай.рф">← на сайт берегурай.рф</a>',
+        //     // }],
+        // ]],
+        // ['@', 'top-center', [
+        //     ['html', { html: '<h1 style="margin:0;">ПИТКЯРАНТА</h1>' }],
+        // ]],
+        ['@', 'right-center', [
+            ['button', { icon: 'question', command: 'ShowHelp' }],
+        ]],
+    ])
 
-    //showHelp()
+    showHelp()
 })
 
 on('idle', async event => {
