@@ -7,19 +7,19 @@ const PERMALINK = 'https://unit4.io'
 
 const typeLabel = new Map([
     ['idea', 'Идея'],
-    ['problem', 'Проблема'],
-    ['nice', 'Ценность'],
+    ['badview', 'Плохой вид на воду'],
+    ['goodview', 'Хороший вид на воду'],
 ])
 const buttonLabel = new Map([
     ['idea', 'Предложить территори'],
-    ['problem', 'Плохой вид на воду'],
-    ['nice', 'Хороший вид на воду'],
+    ['badview', 'Плохой вид на воду'],
+    ['goodview', 'Хороший вид на воду'],
 ])
 
 const colors = new Map([
     ['idea', '#FFD166'],
-    ['nice', '#4DCCBD'],
-    ['problem', '#F25C63'],
+    ['goodview', '#4DCCBD'],
+    ['badview', '#F25C63'],
 ])
 
 setup(async () => {
@@ -62,15 +62,15 @@ on('idle', async event => {
             icon: 'bulb',
             color: colors.get('idea'),
         }],
-        ['AddNice', {
-            label: buttonLabel.get('nice'),
+        ['AddGoodView', {
+            label: buttonLabel.get('goodview'),
             icon: 'like',
-            color: colors.get('nice'),
+            color: colors.get('goodview'),
         }],
-        ['AddProblem', {
-            label: buttonLabel.get('problem'),
+        ['AddBadView', {
+            label: buttonLabel.get('badview'),
             icon: 'dislike',
-            color: colors.get('problem'),
+            color: colors.get('badview'),
         }],
     ], {
         foldedLabel: 'Добавить',
@@ -115,7 +115,7 @@ on('feature.select', async event => {
 command("AddIdea", async ctx => {
     return AddFeature({
         type: 'idea',
-        title: 'Идея',
+        title: buttonLabel.get('idea'),
         placeholder: 'Опишите свою идею...',
         label: 'Комментарий',
         categories: [
@@ -135,10 +135,10 @@ command("AddIdea", async ctx => {
     })
 })
 
-command("AddProblem", async ctx => {
+command("AddBadView", async ctx => {
     return AddFeature({
-        type: 'problem',
-        title: 'Проблема',
+        type: 'badview',
+        title: buttonLabel.get('badview'),
         placeholder: 'Опишите проблему...',
         label: 'Комментарий',
         categories: [
@@ -156,10 +156,10 @@ command("AddProblem", async ctx => {
     })
 })
 
-command("AddNice", async ctx => {
+command("AddGoodView", async ctx => {
     return AddFeature({
-        type: 'nice',
-        title: 'Ценность',
+        type: 'goodview',
+        title: buttonLabel.get('goodview'),
         placeholder: 'Расскажите свою историю...',
         label: 'Комментарий',
         categories: [
