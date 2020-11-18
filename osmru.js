@@ -59,7 +59,7 @@ async function fetchOsmPoi(bbox, classes) {
         r: en[0],
         b: ws[1],
         l: ws[0],
-    })
+    }, { gateway: false })
 
     if (Array.isArray(result.data)) {
         return result.data.map(poiToFeature)
