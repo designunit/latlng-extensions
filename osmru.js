@@ -52,7 +52,7 @@ async function fetchOsmPoi(bbox, classes) {
     let [ws, en] = bbox
 
     let nclass = classes.join(',')
-    let result = await getJson('http://openstreetmap.ru/api/poi', {
+    let result = await getJson('https://openstreetmap.ru/api/poi', {
         action: 'getpoibbox',
         nclass,
         t: en[1],
