@@ -84,7 +84,7 @@ function mdToHtml(text) {
     return tp.execute(raw)
 }
 
-function getFeaturePopupContent(f) {
+function getFeaturePopupContent(feature) {
     const name = feature.properties['Name']
     if(name){
         return mdToHtml(`## ${name}`)
