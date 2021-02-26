@@ -77,6 +77,33 @@ on('idle', async event => {
     })
 })
 
+function mdToHtml(text) {
+    const md = new markdownit()
+    const tp = new Typograf({ locale: ['ru', 'en-US'] })
+    const raw = md.render(text)
+    return tp.execute(raw)
+}
+
+function getFeaturePopupContent(f) {
+    const name = feature.properties['Name']
+    if(name){
+        return mdToHtml(`## ${name}`)
+    }
+
+    const type = feature.properties['type']
+    if(!type){
+        return null
+    }
+
+    const title = typeLabel.get(type)
+    const comment = feature.properties['comment']
+
+    return mdToHtml([
+        `## ${title}`,
+        comment
+    ].join('\n\n'))
+}
+
 on('feature.select', async event => {
     const featureId = event.data.featureId
     const layerId = event.data.layerId
@@ -90,20 +117,10 @@ on('feature.select', async event => {
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
-    const type = feature.properties['type']
-    const title = typeLabel.get(type)
-    const comment = feature.properties['comment']
-
-    const md = new markdownit()
-    const raw = md.render([
-        `# ${title}`,
-        comment
-    ].join('\n\n'));
-
-    const tp = new Typograf({ locale: ['ru', 'en-US'] })
-    const html = tp.execute(
-        raw
-    )
+    const html = getFeaturePopupContent(feature)
+    if(!html) {
+        return
+    }
 
     await showMapPopup(feature.geometry.coordinates, ['html', {
         html, style: {
