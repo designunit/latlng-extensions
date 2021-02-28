@@ -247,14 +247,14 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
             required: 'Вы забыли оставить коментарий',
             rows: 12,
         }]],
-        // ['contact', ['input', {
-        //     label: 'Присоединяйтесь к проекту, оставьте ваши имя, e-mail, телефон или социальные сети (по желанию)',
-        //     placeholder: 'имя, e-mail, телефон, соцсети',
-        //     // pattern: {
-        //     //        value: /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i,
-        //     //        message: "invalid email address"
-        //     //    }
-        // }]],
+        ['contact', ['input', {
+            label: 'Присоединяйтесь к проекту, оставьте ваши имя, e-mail, телефон или социальные сети (по желанию)',
+            placeholder: 'имя, e-mail, телефон, соцсети',
+            // pattern: {
+            //        value: /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i,
+            //        message: "invalid email address"
+            //    }
+        }]],
     ], {
         title,
         submit: 'Добавить',
@@ -265,7 +265,7 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     const properties = {
         comment: form.comment,
         // category: form.category,
-        // contact: form.contact,
+        contact: form.contact,
         dateAdded: date.toString(),
         type,
     }
