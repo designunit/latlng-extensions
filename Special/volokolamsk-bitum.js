@@ -134,7 +134,7 @@ command("AddLow", async ctx => {
         type: 'smell_low',
         smell: 1,
         title: buttonLabel.get('smell_low'),
-        placeholder: 'Комментарий',
+        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
         categories: [],
     })
@@ -145,7 +145,7 @@ command("AddMedium", async ctx => {
         type: 'smell_medium',
         smell: 2,
         title: buttonLabel.get('smell_medium'),
-        placeholder: 'Комментарий',
+        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
         categories: [],
     })
@@ -156,7 +156,7 @@ command("AddHigh", async ctx => {
         type: 'smell_high',
         smell: 3,
         title: buttonLabel.get('smell_high'),
-        placeholder: 'Комментарий',
+        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
         categories: [],
     })
@@ -168,7 +168,7 @@ command("ShowHelp", () => {
 
 async function showHelp() {
     const html = mdToHtml(`
-# «Битум. Волоколамск»
+# Битум. Волоколамск
 
 Недавно в Волоколамске у ж/д станции открылось после реконструкции старое нефтехранилище — теперь это битумный терминал. Многие жалуются на вонь, распространяющуюся от него.
 
