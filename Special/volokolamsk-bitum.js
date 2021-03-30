@@ -6,14 +6,14 @@ const LAYER_ID = '606263eddd79a05fefd4c714'
 const PERMALINK = 'https://unit4.io'
 
 const typeLabel = new Map([
-    ['smell_low', 'запаха нет или почти нет'],
-    ['smell_medium', 'запах ощущается иногда, но заметно мешает'],
-    ['smell_high', 'воняет често и сильно'],
+    ['smell_low', 'Все хорошо'],
+    ['smell_medium', 'Запах есть'],
+    ['smell_high', 'Сильный запах'],
 ])
 const buttonLabel = new Map([
-    ['smell_low', 'запаха нет или почти нет'],
-    ['smell_medium', 'запах ощущается иногда, но заметно мешает'],
-    ['smell_high', 'воняет често и сильно'],
+    ['smell_low', 'Все хорошо'],
+    ['smell_medium', 'Запах есть'],
+    ['smell_high', 'Сильный запах'],
 ])
 
 const colors = new Map([
@@ -132,6 +132,7 @@ on('feature.select', async event => {
 command("AddLow", async ctx => {
     return AddFeature({
         type: 'smell_low',
+        smell: 1,
         title: buttonLabel.get('smell_low'),
         placeholder: 'Комментарий',
         label: 'Комментарий',
@@ -142,6 +143,7 @@ command("AddLow", async ctx => {
 command("AddMedium", async ctx => {
     return AddFeature({
         type: 'smell_medium',
+        smell: 2,
         title: buttonLabel.get('smell_medium'),
         placeholder: 'Комментарий',
         label: 'Комментарий',
@@ -152,6 +154,7 @@ command("AddMedium", async ctx => {
 command("AddHigh", async ctx => {
     return AddFeature({
         type: 'smell_high',
+        smell: 3,
         title: buttonLabel.get('smell_high'),
         placeholder: 'Комментарий',
         label: 'Комментарий',
@@ -167,19 +170,13 @@ async function showHelp() {
     const html = mdToHtml(`
 # «Битум. Волоколамск»
 
-Недавно в Волоколамске у ж/д станции открылось после реконструкции старое нефтехранилище - теперь это битумный терминал.
+Недавно в Волоколамске у ж/д станции открылось после реконструкции старое нефтехранилище — теперь это битумный терминал. Многие жалуются на вонь, распространяющуюся от него.
 
-Многие жалуются на вонь, распространяющуюся от него.
+Пожалуйста, отметьте на карте, на месте, где вы проживаете, в какой степени вы ощущаете запах от хранилища.
 
-Пожалуйста, отметьте карте на месте, где вы проживаете, в какой степени вы ощущаете запах от хранилища.
+Будте объективными. Карта нужна для борьбы против выбросов и переговоров с собственниками и властями!
 
-Постарайтесь быть объективными, не приукрашивать и не закрывать глаза на запах.
-
-Карта нужна для борьбы против выбросов и переговоров с собственниками и властями!
-
-Спасибо за содействие!
-
-С уважением, [включиволоколамск.рф](https://включиволоколамск.рф)
+Спасибо за содействие! С уважением, [включиволоколамск.рф](https://включиволоколамск.рф)
     `)
     await showPopup([
         ['html', { html }]
@@ -189,7 +186,7 @@ async function showHelp() {
     })
 }
 
-async function AddFeature({ type, title, placeholder, label, categories }) {
+async function AddFeature({ type, smell, title, placeholder, label, categories }) {
     const mobile = await requestState('layout.mobile')
     const info = mobile
         ? 'Добавте точку на карте'
@@ -236,6 +233,7 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
         // contact: form.contact,
         dateAdded: date.toString(),
         type,
+        smell,
     }
 
     const f = {
