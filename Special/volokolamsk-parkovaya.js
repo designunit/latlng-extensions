@@ -131,7 +131,6 @@ on('feature.select', async event => {
 command("AddAttraction", async ctx => {
     return AddFeature({
         type: 'attraction',
-        smell: 1,
         title: buttonLabel.get('attraction'),
         placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
@@ -142,7 +141,6 @@ command("AddAttraction", async ctx => {
 command("AddIdea", async ctx => {
     return AddFeature({
         type: 'idea',
-        smell: 2,
         title: buttonLabel.get('idea'),
         placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
@@ -153,7 +151,6 @@ command("AddIdea", async ctx => {
 command("AddProblem", async ctx => {
     return AddFeature({
         type: 'problem',
-        smell: 3,
         title: buttonLabel.get('problem'),
         placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
         label: 'Комментарий',
@@ -169,7 +166,7 @@ async function showHelp() {
     const html = mdToHtml(`
 # ВОЛОКОЛАМСК 
 
-**СОВРЕМЕННАЯ ИСТОРИЯ ДРЕВНЕЙШЕГО ГОРОДА.**
+**СОВРЕМЕННАЯ ИСТОРИЯ ДРЕВНЕЙШЕГО ГОРОДА**
 
 Друзья! В 2020 году мы с вами победили на Всероссийском Конкурсе Минстроя РФ «Малые города и исторические поселения» с проектом улицы Советской и городской плотины.
 Проект реализуется и самое время продолжить развитие нашего города и пойти на Конкурс еще раз.
@@ -187,7 +184,7 @@ async function showHelp() {
     })
 }
 
-async function AddFeature({ type, smell, title, placeholder, label, categories }) {
+async function AddFeature({ type, title, placeholder, label, categories }) {
     const mobile = await requestState('layout.mobile')
     const info = mobile
         ? 'Добавте точку на карте'
@@ -234,7 +231,6 @@ async function AddFeature({ type, smell, title, placeholder, label, categories }
         // contact: form.contact,
         dateAdded: date.toString(),
         type,
-        smell,
     }
 
     const f = {
