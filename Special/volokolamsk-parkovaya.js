@@ -6,14 +6,14 @@ const LAYER_ID = '606c6403dd79a05fefd4c770'
 const PERMALINK = 'https://unit4.io'
 
 const typeLabel = new Map([
-    ['attraction', 'Ценности'],
-    ['idea', 'Идеи'],
-    ['problem', 'Проблемы'],
+    ['attraction', 'Ценность'],
+    ['idea', 'Идея'],
+    ['problem', 'Проблема'],
 ])
 const buttonLabel = new Map([
-    ['attraction', 'Ценности'],
-    ['idea', 'Идеи'],
-    ['problem', 'Проблемы'],
+    ['attraction', 'Описать ценность'],
+    ['idea', 'Предложить идею'],
+    ['problem', 'Описать проблему'],
 ])
 const colors = new Map([
     ['attraction', '#4DCCBD'],
