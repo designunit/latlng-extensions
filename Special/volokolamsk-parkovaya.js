@@ -207,7 +207,7 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
         ['comment', ['text', {
             label,
             placeholder,
-            //required: 'Вы забыли оставить коментарий',
+            required: 'Вы забыли оставить коментарий',
             rows: 12,
         }]],
         ['contact', ['input', {
