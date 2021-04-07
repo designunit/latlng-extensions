@@ -132,7 +132,7 @@ command("AddAttraction", async ctx => {
     return AddFeature({
         type: 'attraction',
         title: buttonLabel.get('attraction'),
-        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
+        placeholder: 'Расскажите свою историю...',
         label: 'Комментарий',
         categories: [],
     })
@@ -142,7 +142,7 @@ command("AddIdea", async ctx => {
     return AddFeature({
         type: 'idea',
         title: buttonLabel.get('idea'),
-        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
+        placeholder: 'Опишите свою идею...',
         label: 'Комментарий',
         categories: [],
     })
@@ -152,7 +152,7 @@ command("AddProblem", async ctx => {
     return AddFeature({
         type: 'problem',
         title: buttonLabel.get('problem'),
-        placeholder: 'Вы можете оставить комментарий или пропустить этот шаг, просто нажав кнопку «добавить»',
+        placeholder: 'Опишите проблему...',
         label: 'Комментарий',
         categories: [],
     })
