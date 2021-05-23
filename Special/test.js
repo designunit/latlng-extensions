@@ -164,7 +164,7 @@ command("ShowHelp", () => {
 
 async function showHelp() {
     const html = mdToHtml(`
-        # test 
+# test 
     `)
     await showPopup([
         ['html', { html }]
