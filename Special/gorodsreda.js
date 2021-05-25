@@ -84,7 +84,10 @@ function mdToHtml(text) {
 }
 
 function getFeaturePopupContent(feature) {
-    const name = feature.properties['Name']
+    let name = feature.properties['Name']
+    if(!name){
+        name = feature.properties['project_name']
+    }
     if(name){
         return mdToHtml(`## ${name}`)
     }
