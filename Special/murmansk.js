@@ -7,13 +7,13 @@ const PERMALINK = 'https://unit4.io'
 
 const typeLabel = new Map([
     ['idea', 'Идея'],
-    ['badview', 'Плохой вид на воду'],
-    ['goodview', 'Хороший вид на воду'],
+    ['badview', 'Минусы территории'],
+    ['goodview', 'Плюсы территории'],
 ])
 const buttonLabel = new Map([
     ['idea', 'Предложить территории'],
-    ['badview', 'Плохой вид на воду'],
-    ['goodview', 'Хороший вид на воду'],
+    ['badview', 'Минусы территории'],
+    ['goodview', 'Плюсы территории'],
 ])
 
 const colors = new Map([
