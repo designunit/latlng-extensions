@@ -7,19 +7,19 @@ const PERMALINK = 'https://unit4.io'
 
 const typeLabel = new Map([
     ['idea', 'Идея'],
-    ['badview', 'Минусы территории'],
-    ['goodview', 'Плюсы территории'],
+    ['minus', 'Минусы территории'],
+    ['plus', 'Плюсы территории'],
 ])
 const buttonLabel = new Map([
     ['idea', 'Предложить территории'],
-    ['badview', 'Минусы территории'],
-    ['goodview', 'Плюсы территории'],
+    ['minus', 'Минусы территории'],
+    ['plus', 'Плюсы территории'],
 ])
 
 const colors = new Map([
     ['idea', '#FFD166'],
-    ['goodview', '#4DCCBD'],
-    ['badview', '#F25C63'],
+    ['plus', '#4DCCBD'],
+    ['minus', '#F25C63'],
 ])
 
 setup(async () => {
@@ -63,14 +63,14 @@ on('idle', async event => {
             color: colors.get('idea'),
         }],
         ['AddGoodView', {
-            label: buttonLabel.get('goodview'),
+            label: buttonLabel.get('plus'),
             icon: 'like',
-            color: colors.get('goodview'),
+            color: colors.get('plus'),
         }],
         ['AddBadView', {
-            label: buttonLabel.get('badview'),
+            label: buttonLabel.get('minus'),
             icon: 'dislike',
-            color: colors.get('badview'),
+            color: colors.get('minus'),
         }],
     ], {
         foldedLabel: 'Добавить',
@@ -154,8 +154,8 @@ command("AddIdea", async ctx => {
 
 command("AddBadView", async ctx => {
     return AddFeature({
-        type: 'badview',
-        title: buttonLabel.get('badview'),
+        type: 'minus',
+        title: buttonLabel.get('minus'),
         placeholder: 'Опишите проблему...',
         label: 'Комментарий',
         categories: [
@@ -175,8 +175,8 @@ command("AddBadView", async ctx => {
 
 command("AddGoodView", async ctx => {
     return AddFeature({
-        type: 'goodview',
-        title: buttonLabel.get('goodview'),
+        type: 'plus',
+        title: buttonLabel.get('plus'),
         placeholder: 'Расскажите свою историю...',
         label: 'Комментарий',
         categories: [
