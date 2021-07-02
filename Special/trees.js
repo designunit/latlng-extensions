@@ -159,8 +159,9 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
 			required: true,
 			label: 'Порода',
 			mode: 'tags',
-		}, [trees.map(value => ['option', { value }])],
-		]],
+		}, [trees.map(
+			value => ['option', { value }])
+			]]],
 		['trunk_diameter', ['input', {
 			required: true,
 			label: 'Обхват ствола (см)',
@@ -196,14 +197,15 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
 			label: 'Тип поверхности, в которое посажено дерево',
 			mode: 'tags',
 		}, [
-				ground.map(value => ['option', { value }])
-			]
+				['option', { value: 'газон' }],
+				['option', { value: 'асфальт' }],
+				['option', { value: 'плитка' }],
+			],
 		]],
 		['comment', ['text', {
-			label,
-			placeholder,
-			required: 'Вы забыли оставить коментарий',
-			rows: 12,
+			label: 'Комментарий',
+			required: false,
+			rows: 6,
 		}]],
 	], {
 		title,
@@ -238,12 +240,6 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
 		layerId: LAYER_ID,
 	})
 }
-
-const ground = [
-	'газон',
-	'асфальт',
-	'плитка',
-]
 
 const trees = [
 	'АБРИКОС',
