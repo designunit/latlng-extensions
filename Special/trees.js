@@ -138,9 +138,6 @@ command('AddTree', async ctx => {
 	return AddFeature({
 		type: 'tree',
 		title: buttonLabel.get('tree'),
-		placeholder: 'Расскажите свою историю...',
-		label: 'Комментарий',
-		categories: [],
 	})
 })
 
@@ -160,7 +157,7 @@ async function showHelp() {
 	})
 }
 
-async function AddFeature({ type, title, placeholder, label, categories }) {
+async function AddFeature({ type, title }) {
 	const mobile = await requestState('layout.mobile')
 	const info = mobile
 		? 'Добавте точку на карте'
@@ -441,8 +438,13 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
 	const date = new Date()
 	const properties = {
 		comment: form.comment,
-		// category: form.category,
-		// contact: form.contact,
+		wood: form.wood,
+		trunk_diameter: form.trunk_diameter,
+		height: form.height,
+		crown_diameter: form.crown_diameter,
+		condition: form.condition,
+		trunk_support: form.trunk_support,
+		ground: form.ground,
 		dateAdded: date.toString(),
 		type,
 	}
