@@ -125,7 +125,7 @@ on('feature.select', async event => {
 					key: label, value: feature.properties[key]
 				}
 			})
-			.filter(({ value }))
+			.filter(({ value }) => Boolean(value))
 	}])
 	// await showMapPopup(feature.geometry.coordinates, ['html', {
 	// 	html, style: {
