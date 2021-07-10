@@ -68,22 +68,27 @@ function mdToHtml(text) {
 }
 
 function getFeaturePopupContent(feature) {
-	const name = feature.properties['Name']
-	if (name) {
-		return mdToHtml(`## ${name}`)
-	}
-
-	const type = feature.properties['type']
+	const type = feature.properties['wood']
 	if (!type) {
 		return null
 	}
 
-	const title = typeLabel.get(type)
-	const comment = feature.properties['comment']
+	const title = wood
+
+	const kv = [
+		['trunk_diameter', 'Обхват ствола (см)'],
+		['height', 'Высота (м)'],
+		['crown_diameter', 'Диаметр кроны (м)'],
+		['condition', 'Состояние'],
+		['trunk_support', 'Наличие подпорки'],
+		['ground', 'Тип поверхности, в которое посажено дерево'],
+	].map(([key, label]) => {
+		return `${label}: ${feature.properties[key]}`
+	})
 
 	return mdToHtml([
 		`## ${title}`,
-		comment
+		...kv,
 	].join('\n\n'))
 }
 
@@ -100,16 +105,33 @@ on('feature.select', async event => {
 	const geometryType = feature.geometry.type
 	assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
-	const html = getFeaturePopupContent(feature)
-	if (!html) {
-		return
-	}
+	// const html = getFeaturePopupContent(feature)
+	// if (!html) {
+	// 	return
+	// }
 
-	await showMapPopup(feature.geometry.coordinates, ['html', {
-		html, style: {
-			padding: 16,
-		}
+	const kv = [
+		['trunk_diameter', 'Обхват ствола (см)'],
+		['height', 'Высота (м)'],
+		['crown_diameter', 'Диаметр кроны (м)'],
+		['condition', 'Состояние'],
+		['trunk_support', 'Наличие подпорки'],
+		['ground', 'Тип поверхности, в которое посажено дерево'],
+	]
+	await showMapPopup(feature.geometry.coordinates, ['kv', {
+		data: kv
+			.map(([key, label]) => {
+				return {
+					key: label, value: feature.properties[key]
+				}
+			})
+			.filter(({ value }))
 	}])
+	// await showMapPopup(feature.geometry.coordinates, ['html', {
+	// 	html, style: {
+	// 		padding: 16,
+	// 	}
+	// }])
 })
 
 command('AddTree', async ctx => {
