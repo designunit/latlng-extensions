@@ -111,6 +111,7 @@ on('feature.select', async event => {
 	// }
 
 	const kv = [
+		['wood', 'Порода'],
 		['trunk_diameter', 'Обхват ствола (см)'],
 		['height', 'Высота (м)'],
 		['crown_diameter', 'Диаметр кроны (м)'],
@@ -121,8 +122,12 @@ on('feature.select', async event => {
 	await showMapPopup(feature.geometry.coordinates, ['kv', {
 		data: kv
 			.map(([key, label]) => {
+				let value = feature.properties[key]
+				if (Array.isArray(value)) {
+					value = value[0]
+				}
 				return {
-					key: label, value: feature.properties[key]
+					key: label, value,
 				}
 			})
 			.filter(({ value }) => Boolean(value))
