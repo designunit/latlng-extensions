@@ -92,7 +92,7 @@ function getFeaturePopupContent(feature) {
 	].join('\n\n'))
 }
 
-	on('feature.select', async event => {
+on('feature.select', async event => {
 	const featureId = event.data.featureId
 	const layerId = event.data.layerId
 	if (!featureId) {
