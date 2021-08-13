@@ -55,6 +55,12 @@ on('install', async event => {
 })
 
 on('idle', async event => {
+    const uid = await getUserId()
+    if(!uid){
+        console.log('User is not authorized: do not show buttons')
+        return
+    }
+
     await toolbar([
         ['AddIdea', {
             label: buttonLabel.get('idea'),
@@ -200,6 +206,11 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
             required: 'Вы забыли оставить коментарий',
             rows: 12,
         }]],
+        ['imgs', ['image', {
+            required: false,
+            label: 'Images',
+            multiple: true,
+        }]],
         ['contact', ['input', {
             label: 'Присоединяйтесь к проекту, оставьте ваши имя, e-mail, телефон или социальные сети (по желанию)',
             placeholder: 'имя, e-mail, телефон, соцсети',
@@ -213,6 +224,8 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
         submit: 'Добавить',
         cancel: 'Отмена',
     })
+
+    console.log('input:', form)
 
     const date = new Date()
     const properties = {
