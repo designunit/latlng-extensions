@@ -113,7 +113,7 @@ function getFeaturePopupContent(feature) {
         imgs = []
     }
 
-    const imgRows = imgs.map(img => `![](img.fileUrl)`)
+    const imgRows = imgs.map(img => `![](${img.fileUrl})`)
 
     return mdToHtml([
         `## ${title}`,
