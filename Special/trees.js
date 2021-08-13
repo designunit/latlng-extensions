@@ -76,11 +76,11 @@ function getFeaturePopupContent(feature) {
 	const title = wood
 
 	const kv = [
-		['trunk_diameter', 'Обхват ствола (см)'],
+		['trunk_diameter', 'Обхват ствола на высоте 130 см (см)'],
 		['height', 'Высота (м)'],
 		['crown_diameter', 'Диаметр кроны (м)'],
 		['condition', 'Состояние'],
-		['trunk_support', 'Наличие подпорки'],
+		['trunk_support', 'Наличие опоры'],
 		['ground', 'Тип поверхности, в которое посажено дерево'],
 	].map(([key, label]) => {
 		return `${label}: ${feature.properties[key]}`
@@ -92,7 +92,7 @@ function getFeaturePopupContent(feature) {
 	].join('\n\n'))
 }
 
-on('feature.select', async event => {
+	on('feature.select', async event => {
 	const featureId = event.data.featureId
 	const layerId = event.data.layerId
 	if (!featureId) {
@@ -112,11 +112,11 @@ on('feature.select', async event => {
 
 	const kv = [
 		['wood', 'Порода'],
-		['trunk_diameter', 'Обхват ствола (см)'],
+		['trunk_diameter', 'Обхват ствола на высоте 130 см (см)'],
 		['height', 'Высота (м)'],
 		['crown_diameter', 'Диаметр кроны (м)'],
 		['condition', 'Состояние'],
-		['trunk_support', 'Наличие подпорки'],
+		['trunk_support', 'Наличие опоры'],
 		['ground', 'Тип поверхности, в которое посажено дерево'],
 	]
 	await showMapPopup(feature.geometry.coordinates, ['kv', {
@@ -165,8 +165,8 @@ async function showHelp() {
 async function AddFeature({ type, title }) {
 	const mobile = await requestState('layout.mobile')
 	const info = mobile
-		? 'Добавте точку на карте'
-		: 'Добавте точку на карте'
+		? 'Добавьте точку на карте'
+		: 'Добавьте точку на карте'
 	const info2 = mobile
 		? 'Наведите перекрестие и нажмите ОК'
 		: 'Кликните по карте'
@@ -391,7 +391,7 @@ async function AddFeature({ type, title }) {
 		]],
 		['trunk_diameter', ['input', {
 			required: true,
-			label: 'Обхват ствола (см)',
+			label: 'Обхват ствола на высоте 130 см (см)',
 		}]],
 		['height', ['input', {
 			required: true,
@@ -408,11 +408,12 @@ async function AddFeature({ type, title }) {
 		}, [
 				['option', { value: 'Удовлетворительное' }],
 				['option', { value: 'Неудовлетворительное' }],
+				['option', { value: 'Хорошее' }],
 			],
 		]],
 		['trunk_support', ['select', {
 			required: true,
-			label: 'Наличие подпорки',
+			label: 'Наличие опоры',
 			mode: 'single',
 		}, [
 				['option', { value: 'Есть' }],
@@ -424,9 +425,11 @@ async function AddFeature({ type, title }) {
 			label: 'Тип поверхности, в которое посажено дерево',
 			mode: 'tags',
 		}, [
-				['option', { value: 'газон' }],
-				['option', { value: 'асфальт' }],
-				['option', { value: 'плитка' }],
+				['option', { value: 'Газон с травой' }],
+				['option', { value: 'Газон вытоптанный' }],
+				['option', { value: 'Плитка' }],
+				['option', { value: 'В квадрате' }],
+				['option', { value: 'Открытый грунт' }],
 			],
 		]],
 		['comment', ['text', {
