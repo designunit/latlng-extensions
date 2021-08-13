@@ -121,7 +121,7 @@ function getFeaturePopupContent(feature) {
 
         `added by ${user}`,
 
-        ...imgsRows,
+        ...imgRows,
     ].join('\n\n'))
 }
 
