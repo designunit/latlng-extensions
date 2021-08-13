@@ -103,9 +103,25 @@ function getFeaturePopupContent(feature) {
     const title = typeLabel.get(type)
     const comment = feature.properties['comment']
 
+    let user = feature.properties['user']
+    if(!user) {
+       user = 'unknown' 
+    }
+
+    let imgs = feature.properties['imgs']
+    if (!imgs) {
+        imgs = []
+    }
+
+    const imgRows = imgs.map(img => `![](img.fileUrl)`)
+
     return mdToHtml([
         `## ${title}`,
-        comment
+        comment,
+
+        `added by ${user}`,
+
+        ...imgsRows,
     ].join('\n\n'))
 }
 
@@ -196,10 +212,7 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     //         categories.map(value => ['option', { value }])
     //     ]]
     // ]
-    const before = []
     const form = await requestInput([
-        ...before,
-
         ['comment', ['text', {
             label,
             placeholder,
@@ -211,14 +224,6 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
             label: 'Images',
             multiple: true,
         }]],
-        ['contact', ['input', {
-            label: 'Присоединяйтесь к проекту, оставьте ваши имя, e-mail, телефон или социальные сети (по желанию)',
-            placeholder: 'имя, e-mail, телефон, соцсети',
-            // pattern: {
-            //        value: /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i,
-            //        message: "invalid email address"
-            //    }
-        }]],
     ], {
         title,
         submit: 'Добавить',
@@ -227,9 +232,14 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
 
     console.log('input:', form)
 
+    const user = await getUser()
     const date = new Date()
     const properties = {
         comment: form.comment,
+        imgs: form.imgs,
+        user: user.name,
+        userId: user.id,
+        userImage: user.image,
         // category: form.category,
         // contact: form.contact,
         dateAdded: date.toString(),
