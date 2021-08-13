@@ -113,7 +113,7 @@ function getFeaturePopupContent(feature) {
         imgs = []
     }
 
-    const imgRows = imgs.map(img => `![](${img.fileUrl})`)
+    const imgRows = imgs.map(img => `<img src="${img.fileUrl}" width="100%"/>`)
 
     return mdToHtml([
         `## ${title}`,
@@ -142,6 +142,29 @@ on('feature.select', async event => {
     if(!html) {
         return
     }
+
+    // const kv = [
+    //     ['wood', 'Порода'],
+    //     ['trunk_diameter', 'Обхват ствола на высоте 130 см (см)'],
+    //     ['height', 'Высота (м)'],
+    //     ['crown_diameter', 'Диаметр кроны (м)'],
+    //     ['condition', 'Состояние'],
+    //     ['trunk_support', 'Наличие опоры'],
+    //     ['ground', 'Тип поверхности, в которое посажено дерево'],
+    // ]
+    // await showMapPopup(feature.geometry.coordinates, ['kv', {
+    //     data: kv
+    //         .map(([key, label]) => {
+    //             let value = feature.properties[key]
+    //             if (Array.isArray(value)) {
+    //                 value = value[0]
+    //             }
+    //             return {
+    //                 key: label, value,
+    //             }
+    //         })
+    //         .filter(({ value }) => Boolean(value))
+    // }])
 
     await showMapPopup(feature.geometry.coordinates, ['html', {
         html, style: {
