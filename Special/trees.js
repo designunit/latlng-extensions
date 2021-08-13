@@ -2,8 +2,8 @@ importScripts('https://unpkg.com/typograf@6.11.0/dist/typograf.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js')
 importScripts('/latlng.js')
 
-const LAYER_ID = '60df35cf1f491500087f6f76'
-const PERMALINK = 'https://unit4.io'
+//inbox layer
+const LAYER_ID = '6116e91c3fccd6000932d7ff'
 
 const typeLabel = new Map([
 	['tree', 'Дерево'],
@@ -16,39 +16,30 @@ const colors = new Map([
 ])
 
 setup(async () => {
-	// const layerId = await requestLayer({
-	// 	geometryTypes: ['Point']
-	// })
 	return {
 		name: 'Trees',
 		version: '1.0.0',
 		description: 'survey',
-		// options: {
-		// 	layerId,
-		// }
 	}
 })
 
 on('install', async event => {
-	overlay([
-		// ['@', 'top-left', [
-		//     ['button', { icon: 'arrow-left', href: PERMALINK }],
-		//     // ['html', {
-		//     //     html: '<a style="background:white;padding:2px 5px;" href="https://берегурай.рф">← на сайт берегурай.рф</a>',
-		//     // }],
-		// ]],
-		// ['@', 'top-center', [
-		//     ['html', { html: '<h1 style="margin:0;">ПИТКЯРАНТА</h1>' }],
-		// ]],
-		['@', 'right-center', [
-			['button', { icon: 'question', command: 'ShowHelp' }],
-		]],
-	])
+	// overlay([
+	// 	['@', 'right-center', [
+	// 		['button', { icon: 'question', command: 'ShowHelp' }],
+	// 	]],
+	// ])
 
 	//showHelp()
 })
 
 on('idle', async event => {
+    const uid = await getUserId()
+    if(!uid){
+        console.log('User is not authorized: do not show buttons')
+        return
+    }
+
 	await toolbar([
 		['AddTree', {
 			label: buttonLabel.get('tree'),
@@ -111,26 +102,28 @@ on('feature.select', async event => {
 	// }
 
 	const kv = [
-		['wood', 'Порода'],
-		['trunk_diameter', 'Обхват ствола на высоте 130 см (см)'],
-		['height', 'Высота (м)'],
-		['crown_diameter', 'Диаметр кроны (м)'],
-		['condition', 'Состояние'],
-		['trunk_support', 'Наличие опоры'],
-		['ground', 'Тип поверхности, в которое посажено дерево'],
+		['wood',           'string', 'Порода'],
+		['trunk_diameter', 'number', 'Обхват ствола на высоте 130 см (см)'],
+		['height',         'number', 'Высота (м)'],
+		['crown_diameter', 'number', 'Диаметр кроны (м)'],
+		['condition',      'string', 'Состояние'],
+		['trunk_support',  'string', 'Наличие опоры'],
+		['ground',         'string', 'Тип поверхности, в которое посажено дерево'],
+		['image',          'image',  'Фотография'],
+		['user',           'string', 'Пользователь'],
 	]
 	await showMapPopup(feature.geometry.coordinates, ['kv', {
 		data: kv
-			.map(([key, label]) => {
-				let value = feature.properties[key]
-				if (Array.isArray(value)) {
-					value = value[0]
-				}
+			.filter(([key, view, label]) => Boolean(feature.properties[key]))
+			.map(([key, view, label]) => {
+				const value = feature.properties[key]
+
 				return {
-					key: label, value,
+					key: label,
+					value,
+					view,
 				}
 			})
-			.filter(({ value }) => Boolean(value))
 	}])
 	// await showMapPopup(feature.geometry.coordinates, ['html', {
 	// 	html, style: {
@@ -141,7 +134,6 @@ on('feature.select', async event => {
 
 command('AddTree', async ctx => {
 	return AddFeature({
-		type: 'tree',
 		title: buttonLabel.get('tree'),
 	})
 })
@@ -162,7 +154,7 @@ async function showHelp() {
 	})
 }
 
-async function AddFeature({ type, title }) {
+async function AddFeature({ title }) {
 	const mobile = await requestState('layout.mobile')
 	const info = mobile
 		? 'Добавьте точку на карте'
@@ -171,18 +163,12 @@ async function AddFeature({ type, title }) {
 		? 'Наведите перекрестие и нажмите ОК'
 		: 'Кликните по карте'
 	const coord = await requestPoint(info2, info)
-	// const coord = await requestPoint('Кликни по карте', 'что-то произойдет')
 
-	// const before = !categories ? [] : [
-	//     ['category', ['select', { label: 'Категория' },
-	//         categories.map(value => ['option', { value }])
-	//     ]]
-	// ]
 	const form = await requestInput([
 		['wood', ['select', {
 			required: true,
 			label: 'Порода',
-			mode: 'tags',
+			mode: 'default-custom',
 		}, [
 				['option', { value: 'АБРИКОС' }],
 				['option', { value: 'АКАЦИЯ' }],
@@ -389,17 +375,23 @@ async function AddFeature({ type, title }) {
 				['option', { value: 'Ясень бархатный голый' }],
 			]
 		]],
-		['trunk_diameter', ['input', {
+		['trunk_diameter', ['number', {
 			required: true,
 			label: 'Обхват ствола на высоте 130 см (см)',
+			min: 1,
+			max: 1000,
 		}]],
-		['height', ['input', {
+		['height', ['number', {
 			required: true,
 			label: 'Высота (м)',
+			min: 1,
+			max: 1000,
 		}]],
-		['crown_diameter', ['input', {
+		['crown_diameter', ['number', {
 			required: true,
 			label: 'Диаметр кроны (м)',
+			min: 1,
+			max: 1000,
 		}]],
 		['condition', ['select', {
 			required: true,
@@ -423,7 +415,7 @@ async function AddFeature({ type, title }) {
 		['ground', ['select', {
 			required: true,
 			label: 'Тип поверхности, в которое посажено дерево',
-			mode: 'tags',
+			mode: 'single',
 		}, [
 				['option', { value: 'Газон с травой' }],
 				['option', { value: 'Газон вытоптанный' }],
@@ -432,9 +424,14 @@ async function AddFeature({ type, title }) {
 				['option', { value: 'Открытый грунт' }],
 			],
 		]],
-		['comment', ['text', {
-			label: 'Комментарий',
+		['photos', ['image', {
 			required: false,
+			label: 'Фотографии',
+			multiple: true,
+		}]],
+		['comment', ['text', {
+			required: false,
+			label: 'Комментарий',
 			rows: 6,
 		}]],
 	], {
@@ -443,8 +440,19 @@ async function AddFeature({ type, title }) {
 		cancel: 'Отмена',
 	})
 
+    console.log('input:', form)
+
+    const user = await getUser()
 	const date = new Date()
+    const image = form.photos[0].fileUrl
+
 	const properties = {
+        user: user.name,
+        uid: user.id,
+
+		image,
+		dateAdded: date.toString(),
+
 		comment: form.comment,
 		wood: form.wood,
 		trunk_diameter: form.trunk_diameter,
@@ -453,8 +461,7 @@ async function AddFeature({ type, title }) {
 		condition: form.condition,
 		trunk_support: form.trunk_support,
 		ground: form.ground,
-		dateAdded: date.toString(),
-		type,
+		photos: form.photos,
 	}
 
 	const f = {
