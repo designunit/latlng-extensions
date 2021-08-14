@@ -114,14 +114,14 @@ on('feature.select', async event => {
 	]
 	await showMapPopup(feature.geometry.coordinates, ['kv', {
 		data: kv
-			.filter(([key, view, label]) => Boolean(feature.properties[key]))
-			.map(([key, view, label]) => {
+			.filter(([key, kind, label]) => Boolean(feature.properties[key]))
+			.map(([key, kind, label]) => {
 				const value = feature.properties[key]
 
 				return {
 					key: label,
 					value,
-					view,
+					kind,
 				}
 			})
 	}])
