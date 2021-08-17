@@ -2,8 +2,8 @@ importScripts('https://unpkg.com/typograf@6.11.0/dist/typograf.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js')
 importScripts('/latlng.js')
 
-//inbox layer
-const LAYER_ID = '6116e91c3fccd6000932d7ff'
+//inbox source
+const SOURCE_ID = '61157477848dae0008136e1a'
 
 const typeLabel = new Map([
 	['tree', 'Дерево'],
@@ -168,7 +168,7 @@ async function AddFeature({ title }) {
 		['wood', ['select', {
 			required: true,
 			label: 'Порода',
-			mode: 'default-custom',
+			mode: 'default-search',
 		}, [
 				['option', { value: 'АБРИКОС' }],
 				['option', { value: 'АКАЦИЯ' }],
@@ -373,6 +373,7 @@ async function AddFeature({ title }) {
 				['option', { value: 'Ясень сирийский' }],
 				['option', { value: 'Ясень войлочный' }],
 				['option', { value: 'Ясень бархатный голый' }],
+				['option', { value: 'Другое' }],
 			]
 		]],
 		['trunk_diameter', ['number', {
@@ -479,6 +480,6 @@ async function AddFeature({ title }) {
 	}
 
 	await addFeatures(f, {
-		layerId: LAYER_ID,
+		sourceId: SOURCE_ID,
 	})
 }
