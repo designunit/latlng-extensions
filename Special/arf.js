@@ -21,11 +21,11 @@ setup(async () => {
 })
 
 on('install', async event => {
-	// overlay([
-	// 	['@', 'right-center', [
-	// 		['button', { icon: 'question', command: 'ShowHelp' }],
-	// 	]],
-	// ])
+	overlay([
+		['@', 'right-center', [
+			['button', { icon: 'question', command: 'ShowHelp' }],
+		]],
+	])
 
 	showHelp()
 })
@@ -133,7 +133,7 @@ on('feature.select', async event => {
 
 command('AddComment', async ctx => {
 	return AddFeature({
-		title: Это геоинформационная система mesto.io'
+		title: 'Добавить',
 	})
 })
 
@@ -144,6 +144,8 @@ command("ShowHelp", () => {
 async function showHelp() {
 	const html = mdToHtml(`
 # архитекторы.рф
+
+Это геоинформационная система mesto.io
 
 Чтобы сервис жил и развивался, важно дополнять и наращивать его функционал, применяя mesto.io в разных проектах
 
@@ -1271,16 +1273,18 @@ async function AddFeature({ title }) {
             label: 'В какой стадии находится проект?',
             placeholder: 'идея / в процессе / уже все сделали',
         }]],
-        ['requirements', ['text', {
-            required: false,
-            label: 'Какой функционал / слои информации вам необходимы дополнительно?',
+
+        //4
+        ['about_mesto', ['text', {
+            required: true,
+            label: 'какие задачи вы решите, применив mesto.io в своем проекте?',
             rows: 6,
         }]],
 
         // 5
-        ['about_mesto', ['text', {
-            required: true,
-            label: 'какие задачи вы решите, применив mesto.io в своем проекте?',
+        ['requirements', ['text', {
+            required: false,
+            label: 'Какой функционал / слои информации вам необходимы дополнительно?',
             rows: 6,
         }]],
         
