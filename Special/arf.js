@@ -83,6 +83,7 @@ function getFeaturePopupContent(feature) {
 }
 
 on('feature.select', async event => {
+    const title = 'Идея'
 	const featureId = event.data.featureId
 	const layerId = event.data.layerId
 	if (!featureId) {
@@ -101,7 +102,7 @@ on('feature.select', async event => {
 	}
 
 	await showMapPopup(feature.geometry.coordinates, ['html', {
-		html, style: {
+        title, html, style: {
 			padding: 8,
 		}
 	}])
@@ -1312,6 +1313,9 @@ async function AddFeature({ title }) {
         properties.user = user.name
         properties.uid = user.id
     }
+
+    const date = new Date()
+    properties.dateAdded = date.toString()
 
 	const f = {
 		type: 'FeatureCollection',
