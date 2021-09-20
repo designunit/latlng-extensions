@@ -56,22 +56,19 @@ function mdToHtml(text) {
 }
 
 function getFeaturePopupContent(feature) {
-	const type = feature.properties['wood']
-	if (!type) {
-		return null
-	}
-
-	const title = wood
-
 	const kv = [
-		['trunk_diameter', 'Обхват ствола на высоте 130 см (см)'],
-		['height', 'Высота (м)'],
-		['crown_diameter', 'Диаметр кроны (м)'],
-		['condition', 'Состояние'],
-		['trunk_support', 'Наличие опоры'],
-		['ground', 'Тип поверхности, в которое посажено дерево'],
-	].map(([key, label]) => {
-		return `${label}: ${feature.properties[key]}`
+        ['project', 'Пара слов о проекте'],
+        ['project_state', 'В какой стадии находится проект?'],
+        ['mesto_about', 'какие задачи вы решите, применив mesto.io в своем проекте?'],
+        ['mesto_requirements', 'Какой функционал / слои информации вам необходимы дополнительно?'],
+	]
+    .filter(([key, _]) => {
+        const value = feature.properties[key]
+        return !!value
+    })
+    .map(([key, label]) => {
+        const value = feature.properties[key]
+		return `**${label}**<br/>\n${value}`
 	})
 
 	return mdToHtml([
@@ -81,8 +78,6 @@ function getFeaturePopupContent(feature) {
 }
 
 on('feature.select', async event => {
-    return
-
 	const featureId = event.data.featureId
 	const layerId = event.data.layerId
 	if (!featureId) {
@@ -95,40 +90,16 @@ on('feature.select', async event => {
 	const geometryType = feature.geometry.type
 	assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
-	// const html = getFeaturePopupContent(feature)
-	// if (!html) {
-	// 	return
-	// }
+	const html = getFeaturePopupContent(feature)
+	if (!html) {
+		return
+	}
 
-	const kv = [
-		['wood',           'string', 'Порода'],
-		['trunk_diameter', 'number', 'Обхват ствола на высоте 130 см (см)'],
-		['height',         'number', 'Высота (м)'],
-		['crown_diameter', 'number', 'Диаметр кроны (м)'],
-		['condition',      'string', 'Состояние'],
-		['trunk_support',  'string', 'Наличие опоры'],
-		['ground',         'string', 'Тип поверхности, в которое посажено дерево'],
-		['image',          'image',  'Фотография'],
-		['user',           'string', 'Пользователь'],
-	]
-	await showMapPopup(feature.geometry.coordinates, ['kv', {
-		data: kv
-			.filter(([key, kind, label]) => Boolean(feature.properties[key]))
-			.map(([key, kind, label]) => {
-				const value = feature.properties[key]
-
-				return {
-					key: label,
-					value,
-					kind,
-				}
-			})
+	await showMapPopup(feature.geometry.coordinates, ['html', {
+		html, style: {
+			padding: 8,
+		}
 	}])
-	// await showMapPopup(feature.geometry.coordinates, ['html', {
-	// 	html, style: {
-	// 		padding: 16,
-	// 	}
-	// }])
 })
 
 command('AddComment', async ctx => {
