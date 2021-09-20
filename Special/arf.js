@@ -76,7 +76,7 @@ function getFeaturePopupContent(feature) {
 		return `<p><strong>${label}</strong><br/>${value}</p>`
 	})
 
-	return mdToHtml([
+	return t([
 		`<h2>${title}</h2>`,
 		...kv,
 	].join('\n\n'))
