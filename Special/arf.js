@@ -56,6 +56,7 @@ function mdToHtml(text) {
 }
 
 function getFeaturePopupContent(feature) {
+    const title = 'Идея'
 	const kv = [
         ['project', 'Пара слов о проекте'],
         ['project_state', 'В какой стадии находится проект?'],
