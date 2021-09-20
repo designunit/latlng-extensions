@@ -145,7 +145,7 @@ async function showHelp() {
 	const html = mdToHtml(`
 # архитекторы.рф
 
-Чтобы сервис жил и развивался, необходимо дополнять и наращивать его функционал, применяя его в разных типах проектов. 
+Чтобы сервис жил и развивался, важно дополнять и наращивать его функционал, применяя его в разных проектах.
 
 Здесь можно отметить точку размещения вашего проекта на карте и заполнить небольшой опрос о том, как вы видите применение mesto.io
     `)
@@ -1263,25 +1263,35 @@ async function AddFeature({ title }) {
 		// }]],
 		['project', ['text', {
 			required: true,
-			label: 'В каком проекте вы видите использование mesto.io?',
+			label: 'Пара слов о проекте',
 			rows: 6,
 		}]],
-        ['project', ['text', {
-            required: true,
-            label: 'Как вы видите образ результата?',
-        
+        ['project_state', ['input', {
+            required: false,
+            label: 'В какой стадии находится проект?',
+            placeholder: 'идея / в процессе / уже все сделали',
+        }]],
+        ['requrements', ['text', {
+            required: false,
+            label: 'Какой функционал / слои информации вам необходимы дополнительно?',
             rows: 6,
         }]],
-        ['project_state', ['select', {
+        ['about_mesto', ['text', {
             required: false,
-            label: 'В каком статусе находится проект сейчас',
-            mode: 'single',
-        }, [
-                ['option', { value: 'идея' }],
-                ['option', { value: 'в работе' }],
-                ['option', { value: 'уже все сделали' }],
-            ],
-        ]],
+            label: 'Каким вы видите образ результата использования mesto.io?',
+            rows: 6,
+        }]],
+        
+        // ['project_state', ['select', {
+        //     required: false,
+        //     label: 'В какой стадии находится проект?',
+        //     mode: 'single',
+        // }, [
+        //         ['option', { value: 'идея' }],
+        //         ['option', { value: 'в работе' }],
+        //         ['option', { value: 'уже все сделали' }],
+        //     ],
+        // ]],
         ['contact_name', ['input', {
             required: true,
             label: 'Имя',
