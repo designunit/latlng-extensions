@@ -1275,14 +1275,14 @@ async function AddFeature({ title }) {
         }]],
 
         //4
-        ['about_mesto', ['text', {
+        ['mesto_about', ['text', {
             required: true,
             label: 'какие задачи вы решите, применив mesto.io в своем проекте?',
             rows: 3,
         }]],
 
         // 5
-        ['requirements', ['text', {
+        ['mesto_requirements', ['text', {
             required: false,
             label: 'Какой функционал / слои информации вам необходимы дополнительно?',
             rows: 3,
@@ -1321,27 +1321,25 @@ async function AddFeature({ title }) {
 
     console.log('input:', form)
 
-    const user = await getUser()
-	const date = new Date()
-    const image = form.photos[0].fileUrl
-
 	const properties = {
-        user: user.name,
-        uid: user.id,
 
 		image,
-		dateAdded: date.toString(),
+		// dateAdded: date.toString(),
 
-		comment: form.comment,
-		wood: form.wood,
-		trunk_diameter: form.trunk_diameter,
-		height: form.height,
-		crown_diameter: form.crown_diameter,
-		condition: form.condition,
-		trunk_support: form.trunk_support,
-		ground: form.ground,
-		photos: form.photos,
+		city: form.city,
+		project: form.project,
+        project_state: form.project_state,
+		mesto_about: form.mesto_about,
+		mesto_requirements: form.mesto_requirements,
+		contact: form.contact,
+		contact_name: form.contact_name,
 	}
+
+    const user = await getUser()
+    if(user) {
+        properties.user = user.name
+        properties.uid = user.id
+    }
 
 	const f = {
 		type: 'FeatureCollection',
