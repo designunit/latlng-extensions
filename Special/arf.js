@@ -1322,10 +1322,6 @@ async function AddFeature({ title }) {
     console.log('input:', form)
 
 	const properties = {
-
-		image,
-		// dateAdded: date.toString(),
-
 		city: form.city,
 		project: form.project,
         project_state: form.project_state,
