@@ -133,7 +133,7 @@ on('feature.select', async event => {
 
 command('AddComment', async ctx => {
 	return AddFeature({
-		title: buttonLabel.get('comment'),
+		title: Это геоинформационная система mesto.io'
 	})
 })
 
@@ -1271,14 +1271,16 @@ async function AddFeature({ title }) {
             label: 'В какой стадии находится проект?',
             placeholder: 'идея / в процессе / уже все сделали',
         }]],
-        ['requrements', ['text', {
+        ['requirements', ['text', {
             required: false,
             label: 'Какой функционал / слои информации вам необходимы дополнительно?',
             rows: 6,
         }]],
+
+        // 5
         ['about_mesto', ['text', {
-            required: false,
-            label: 'Каким вы видите образ результата использования mesto.io?',
+            required: true,
+            label: 'какие задачи вы решите, применив mesto.io в своем проекте?',
             rows: 6,
         }]],
         
