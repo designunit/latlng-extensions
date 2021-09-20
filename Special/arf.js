@@ -1266,7 +1266,7 @@ async function AddFeature({ title }) {
 		['project', ['text', {
 			required: true,
 			label: 'Пара слов о проекте',
-			rows: 6,
+			rows: 3,
 		}]],
         ['project_state', ['input', {
             required: false,
@@ -1278,14 +1278,14 @@ async function AddFeature({ title }) {
         ['about_mesto', ['text', {
             required: true,
             label: 'какие задачи вы решите, применив mesto.io в своем проекте?',
-            rows: 6,
+            rows: 3,
         }]],
 
         // 5
         ['requirements', ['text', {
             required: false,
             label: 'Какой функционал / слои информации вам необходимы дополнительно?',
-            rows: 6,
+            rows: 3,
         }]],
         
         // ['project_state', ['select', {
