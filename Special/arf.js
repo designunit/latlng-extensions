@@ -48,11 +48,15 @@ on('idle', async event => {
 	})
 })
 
+function t(text) {
+    const tp = new Typograf({ locale: ['ru', 'en-US'] })
+    return tp.execute(text)
+}
+
 function mdToHtml(text) {
 	const md = new markdownit()
-	const tp = new Typograf({ locale: ['ru', 'en-US'] })
 	const raw = md.render(text)
-	return tp.execute(raw)
+	return t(raw)
 }
 
 function getFeaturePopupContent(feature) {
@@ -69,11 +73,11 @@ function getFeaturePopupContent(feature) {
     })
     .map(([key, label]) => {
         const value = feature.properties[key]
-		return `**${label}**<br/>\n${value}`
+		return `<p><strong>${label}</strong><br/>${value}</p>`
 	})
 
 	return mdToHtml([
-		`## ${title}`,
+		`<h2>${title}</h2>`,
 		...kv,
 	].join('\n\n'))
 }
