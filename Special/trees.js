@@ -445,13 +445,11 @@ async function AddFeature({ title }) {
 
     const user = await getUser()
 	const date = new Date()
-    const image = form.photos[0].fileUrl
 
 	const properties = {
         user: user.name,
         uid: user.id,
 
-		image,
 		dateAdded: date.toString(),
 
 		comment: form.comment,
@@ -462,8 +460,12 @@ async function AddFeature({ title }) {
 		condition: form.condition,
 		trunk_support: form.trunk_support,
 		ground: form.ground,
-		photos: form.photos,
 	}
+
+    if(Array.isArray(form.photos) && form.photos.length > 0) {
+        properties.image = form.photos[0].fileUrl
+        properties.photos = form.photos
+    }
 
 	const f = {
 		type: 'FeatureCollection',
