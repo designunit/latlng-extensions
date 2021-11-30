@@ -472,6 +472,15 @@ async function AddFeature({ title }) {
 				['option', { value: 'Открытый грунт' }],
 			],
 		]],
+		['unique', ['select', {
+			required: false,
+			label: 'Уникальное дерево',
+			mode: 'single',
+		}, [
+				['option', { value: 'Да' }],
+				['option', { value: 'Нет' }],
+			],
+		]],
 		['photos', ['image', {
 			required: false,
 			label: 'Фотографии',
