@@ -421,6 +421,7 @@ async function AddFeature({ title }) {
 				['option', { value: 'Туя восточная' }],
 				['option', { value: 'Калина обыкновенная' }],
 				['option', { value: 'Калина гордовина' }],
+				['option', { value: 'Шиповник' }],
 			]
 		]],
 		['trunk_diameter', ['number', {
