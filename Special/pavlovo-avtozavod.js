@@ -21,13 +21,13 @@ setup(async () => {
 })
 
 on('install', async event => {
-	// overlay([
-	// 	['@', 'right-center', [
-	// 		['button', { icon: 'question', command: 'ShowHelp' }],
-	// 	]],
-	// ])
+	overlay([
+		['@', 'right-center', [
+			['button', { icon: 'question', command: 'ShowHelp' }],
+		]],
+	])
 
-	//showHelp()
+	showHelp()
 })
 
 on('idle', async event => {
