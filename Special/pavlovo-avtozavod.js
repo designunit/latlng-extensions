@@ -31,11 +31,11 @@ on('install', async event => {
 })
 
 on('idle', async event => {
-    const uid = await getUserId()
-    if(!uid){
-        console.log('User is not authorized: do not show buttons')
-        return
-    }
+    // const uid = await getUserId()
+    // if(!uid){
+    //     console.log('User is not authorized: do not show buttons')
+    //     return
+    // }
 
 	await toolbar([
 		['AddPoint', {
@@ -142,7 +142,18 @@ command("ShowHelp", () => {
 
 async function showHelp() {
 	const html = mdToHtml(`
-        # Masterplan
+# Мастер-план
+
+На карте можно предложить свои идеи и предложения по улучшению жизни в городе, или, наоборот, описать его актуальные проблемы. 
+
+Поделиться своим мнением просто:
+
+1. Нажмите кнопку "Добавить"
+2. Укажите место на карте, к которому относится ваш комментарий
+3. Выберите категорию вашего комментария: городская среда и озеленение, транспорт и дороги, экология и загрязнение, безопасность, жилье, социальная инфраструктура, образование, культура и сфера досуга, сохранение наследия и достопримечательности, работа
+4. Напишите ваш комментарий
+
+Количество отметок не ограничено. Чем больше жителей города выскажет свое мнение - тем более реализуемым и полезным для каждого жителя получится итоговый документ мастер-плана.
     `)
 	await showPopup([
 		['html', { html }]
@@ -193,18 +204,20 @@ async function AddFeature({ title }) {
 
     console.log('input:', form)
 
-    const user = await getUser()
 	const date = new Date()
 
 	const properties = {
-        user: user.name,
-        uid: user.id,
-
 		dateAdded: date.toString(),
 
 		comment: form.comment,
 		category: form.category,
 	}
+
+    const user = await getUser()
+    if(user) {
+		properties.user = user.name
+		properties.uid = user.id
+    }
 
     // if(Array.isArray(form.photos) && form.photos.length > 0) {
     //     properties.image = form.photos[0].fileUrl
