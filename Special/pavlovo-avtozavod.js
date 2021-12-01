@@ -61,8 +61,8 @@ function getFeaturePopupContent(feature) {
 		return null
 	}
 
-	const text = feature.properties['text']
-	if (!text) {
+	const comment = feature.properties['comment']
+	if (!comment) {
 		return null
 	}
 
@@ -76,7 +76,7 @@ function getFeaturePopupContent(feature) {
 
 	return mdToHtml([
 		`## ${title}`,
-		text,
+		comment,
 		// ...kv,
 	].join('\n\n'))
 }
@@ -94,40 +94,40 @@ on('feature.select', async event => {
 	const geometryType = feature.geometry.type
 	assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
-	// const html = getFeaturePopupContent(feature)
-	// if (!html) {
-	// 	return
-	// }
+	const html = getFeaturePopupContent(feature)
+	if (!html) {
+		return
+	}
 
-	const kv = [
-		['wood',           'string', 'Порода'],
-		['trunk_diameter', 'number', 'Обхват ствола на высоте 130 см (см)'],
-		['height',         'number', 'Высота (м)'],
-		['crown_diameter', 'number', 'Диаметр кроны (м)'],
-		['condition',      'string', 'Состояние'],
-		['trunk_support',  'string', 'Наличие опоры'],
-		['ground',         'string', 'Тип поверхности, в которое посажено дерево'],
-		['image',          'image',  'Фотография'],
-		['user',           'string', 'Пользователь'],
-	]
-	await showMapPopup(feature.geometry.coordinates, ['kv', {
-		data: kv
-			.filter(([key, kind, label]) => Boolean(feature.properties[key]))
-			.map(([key, kind, label]) => {
-				const value = feature.properties[key]
+	// const kv = [
+	// 	['wood',           'string', 'Порода'],
+	// 	['trunk_diameter', 'number', 'Обхват ствола на высоте 130 см (см)'],
+	// 	['height',         'number', 'Высота (м)'],
+	// 	['crown_diameter', 'number', 'Диаметр кроны (м)'],
+	// 	['condition',      'string', 'Состояние'],
+	// 	['trunk_support',  'string', 'Наличие опоры'],
+	// 	['ground',         'string', 'Тип поверхности, в которое посажено дерево'],
+	// 	['image',          'image',  'Фотография'],
+	// 	['user',           'string', 'Пользователь'],
+	// ]
+	// await showMapPopup(feature.geometry.coordinates, ['kv', {
+	// 	data: kv
+	// 		.filter(([key, kind, label]) => Boolean(feature.properties[key]))
+	// 		.map(([key, kind, label]) => {
+	// 			const value = feature.properties[key]
 
-				return {
-					key: label,
-					value,
-					kind,
-				}
-			})
-	}])
-	// await showMapPopup(feature.geometry.coordinates, ['html', {
-	// 	html, style: {
-	// 		padding: 16,
-	// 	}
+	// 			return {
+	// 				key: label,
+	// 				value,
+	// 				kind,
+	// 			}
+	// 		})
 	// }])
+	await showMapPopup(feature.geometry.coordinates, ['html', {
+		html, style: {
+			padding: 16,
+		}
+	}])
 })
 
 command('AddPoint', async ctx => {
