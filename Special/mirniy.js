@@ -31,6 +31,7 @@ on('install', async event => {
 })
 
 on('idle', async event => {
+    return
     // const uid = await getUserId()
     // if(!uid){
     //     console.log('User is not authorized: do not show buttons')
