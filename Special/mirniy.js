@@ -27,7 +27,7 @@ on('install', async event => {
 		]],
 	])
 
-	showHelp()
+	// showHelp()
 })
 
 on('idle', async event => {
