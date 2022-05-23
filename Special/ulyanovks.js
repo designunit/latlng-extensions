@@ -35,6 +35,12 @@ on('install', async event => {
 })
 
 on('idle', async event => {
+	const uid = await getUserId()
+    if(!uid){
+        console.log('User is not authorized: do not show buttons')
+        return
+    }
+
     await toolbar([
         ['AddIdea', {
         	label: 'Предложить идею',
@@ -194,8 +200,13 @@ async function AddFeature({type, title, placeholder, label}) {
     	cancel: 'Отмена',
     })
 
+	const user = await getUser()
+
 	const date = new Date()
     const properties = {
+    	user: user.name,
+        uid: user.id,
+
 		comment: form.comment,
 		dateAdded: date.toString(),
         type,
