@@ -27,6 +27,12 @@ on('install', async event => {
 })
 
 on('idle', async event => {
+    const uid = await getUserId()
+    if(!uid){
+        console.log('User is not authorized: do not show buttons')
+        return
+    }
+
     await toolbar([
         ['AddIdea', {
             icon: 'plus',
@@ -214,9 +220,17 @@ async function AddFeature() {
     })
 
     const date = new Date()
+    const day = date.getDay()
+    const hours = date.getHours()
+    const user = await getUser()
+
     const properties = {
         ...form,
+        user: user.name,
+        uid: user.id,
         dateAdded: date.toString(),
+        day,
+        hours,
     }
 
     const f = {
