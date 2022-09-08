@@ -52,8 +52,7 @@ on('feature.select', async event => {
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
 
     const title = 'Активность'
-    const static = feature.properties['static']
-    const moving = feature.properties['moving']
+    const activity = feature.properties['activity']
     const groupSize = feature.properties['groupSize']
     const comment = feature.properties['comment']
     const male = feature.properties['male']
@@ -86,8 +85,7 @@ on('feature.select', async event => {
             { key: 'Ж', value: getValue(female) },
             { key: 'Ребенок', value: getValue(child) },
 
-            { key: 'Занятия', value: getValue(static) },
-            { key: 'Движение', value: getValue(moving) },
+            { key: 'Занятия', value: getValue(activity) },
 
             { key: 'Комментарий', value: comment },
         ].filter(({ value }) => Boolean(value))
@@ -162,23 +160,22 @@ async function AddFeature() {
         ['male', ['select', { label: 'М', mode: 'multiple' }, [
             ['option', { value: 'молодежь (18-30)' }],
             ['option', { value: 'взрослый (30-50)' }],
-            ['option', { value: 'пенсионного возраста' }],
+            ['option', { value: 'пенсионер' }],
         ]]],
         ['female', ['select', { label: 'Ж', mode: 'multiple' }, [
             ['option', { value: 'молодежь (18-30)' }],
             ['option', { value: 'взрослый (30-50)' }],
-            ['option', { value: 'пенсионного возраста' }],
+            ['option', { value: 'пенсионер' }],
         ]]],
         ['child', ['select', { label: 'Ребенок', mode: 'multiple' }, [
-            ['option', { value: 'ребенок в коляске' }],
-            ['option', { value: 'ребенок 1-2 лет' }],
+            ['option', { value: 'ребенок (1-2)' }],
             ['option', { value: 'ребенок дошкольного возраста (3-6)' }],
             ['option', { value: 'ребенок младшего/среднего школьного (7-13)' }],
             ['option', { value: 'подростки (14-18)' }],
         ]]],
 
         // Занятия:
-        ['static', ['select', { label: 'Статические активности', mode: 'tags' }, [
+        ['activity', ['select', { label: 'Активности', mode: 'tags' }, [
             ['option', { value: 'стоят' }],
             ['option', { value: 'сидят' }],
             ['option', { value: 'разговаривают' }],
@@ -186,22 +183,17 @@ async function AddFeature() {
             ['option', { value: 'выпивают' }],
             ['option', { value: 'курят' }],
             ['option', { value: 'читают' }],
-            ['option', { value: 'слушают музыку' }],
-            ['option', { value: 'кормят птиц' }],
-            ['option', { value: 'фотографируют/ся' }],
-            ['option', { value: 'справляют нужду' }],
-        ]]],
-
-        // Движение / спорт:
-        ['moving', ['select', { label: 'Динамические активности', mode: 'tags' }, [
             ['option', { value: 'транзит' }],
             ['option', { value: 'прогулка' }],
             ['option', { value: 'бег' }],
             ['option', { value: 'велосипед/самокат' }],
             ['option', { value: 'скейт/ролики' }],
+            ['option', { value: 'фотографируют/ся' }],
             ['option', { value: 'с собакой' }],
             ['option', { value: 'с ребенком (ребенок пешком)' }],
             ['option', { value: 'с коляской' }],
+            ['option', { value: 'слушают музыку' }],
+            ['option', { value: 'кормят птиц' }],
         ]]],
 
         // Day
