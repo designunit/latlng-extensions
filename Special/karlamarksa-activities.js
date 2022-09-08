@@ -170,8 +170,8 @@ async function AddFeature() {
         ['child', ['select', { label: 'Ребенок', mode: 'multiple' }, [
             ['option', { value: 'ребенок (1-2)' }],
             ['option', { value: 'ребенок дошкольного возраста (3-6)' }],
-            ['option', { value: 'ребенок младшего/среднего школьного (7-13)' }],
-            ['option', { value: 'подростки (14-18)' }],
+            ['option', { value: 'ребенок школьного возраста (7-13)' }],
+            ['option', { value: 'подросток (14-18)' }],
         ]]],
 
         // Занятия:
@@ -190,7 +190,6 @@ async function AddFeature() {
             ['option', { value: 'скейт/ролики' }],
             ['option', { value: 'фотографируют/ся' }],
             ['option', { value: 'с собакой' }],
-            ['option', { value: 'с ребенком (ребенок пешком)' }],
             ['option', { value: 'с коляской' }],
             ['option', { value: 'слушают музыку' }],
             ['option', { value: 'кормят птиц' }],
