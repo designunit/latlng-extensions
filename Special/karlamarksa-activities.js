@@ -64,6 +64,10 @@ on('feature.select', async event => {
     const male = feature.properties['male']
     const female = feature.properties['female']
     const child = feature.properties['child']
+    const dateAdded = feature.properties['dateAdded']
+    const date = new Date(dateAdded)
+    const day = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
+    const time = `${date.getHours()}:${date.getMinutes()}`
 
     const md = new markdownit()
     const raw = md.render([
@@ -90,8 +94,9 @@ on('feature.select', async event => {
             { key: 'М', value: getValue(male) },
             { key: 'Ж', value: getValue(female) },
             { key: 'Ребенок', value: getValue(child) },
-
             { key: 'Занятия', value: getValue(activity) },
+            { key: 'Дата', value: day },
+            { key: 'Время', value: time },
 
             { key: 'Комментарий', value: comment },
         ].filter(({ value }) => Boolean(value))
@@ -190,6 +195,8 @@ async function AddFeature() {
             ['option', { value: 'курят' }],
             ['option', { value: 'читают' }],
             ['option', { value: 'транзит' }],
+            ['option', { value: 'поют' }],
+            ['option', { value: 'продают' }],
             ['option', { value: 'прогулка' }],
             ['option', { value: 'бег' }],
             ['option', { value: 'велосипед/самокат' }],
