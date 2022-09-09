@@ -65,9 +65,15 @@ on('feature.select', async event => {
     const female = feature.properties['female']
     const child = feature.properties['child']
     const dateAdded = feature.properties['dateAdded']
+
+    const d = (n) => String(n).length === 1 ? `0${n}` : `${n}`
     const date = new Date(dateAdded)
-    const day = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
-    const time = `${date.getHours()}:${date.getMinutes()}`
+    const day = [date.getDay(), date.getMonth(), date.getFullYear()]
+      .map(d)
+      .join('.')
+    const time = [date.getHours(), date.getMinutes()]
+      .map(d)
+      .join(':')
 
     const md = new markdownit()
     const raw = md.render([
