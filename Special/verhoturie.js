@@ -25,13 +25,13 @@ setup(async () => {
 })
 
 on('install', async event => {
-    // overlay([
-    //        ['@', 'right-center', [
-    //            ['button', { icon: 'question', command: 'ShowHelp' }],
-    //        ]],
-    //    ])
+    overlay([
+        ['@', 'right-center', [
+            ['button', { icon: 'question', command: 'ShowHelp' }],
+        ]],
+    ])
 
-    // showHelp()
+    showHelp()
 })
 
 on('idle', async event => {
@@ -124,9 +124,7 @@ command("ShowHelp", () => {
 
 async function showHelp() {
     const text = `
-# Бульвар Карла Маркса
-
-г. Воронеж
+# г. Верхотурье
 
 Поделиться своим мнением просто: выберите отметку — идею, проблему или ценность, затем укажите точку на карте и напишите свой комментарий во всплывающем окне.
 
