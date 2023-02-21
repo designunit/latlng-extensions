@@ -2,18 +2,12 @@ importScripts('https://unpkg.com/typograf@6.11.0/dist/typograf.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js')
 importScripts('/latlng.js')
 
-const LAYER_ID = '5fe35978dd79a05fefd48d54'
-const PERMALINK = 'https://unit4.io'
+const SOURCE_ID = '63f47812f01217000878cc43'
 
 const typeLabel = new Map([
     ['idea', 'Идея'],
     ['problem', 'Проблема'],
     ['nice', 'Ценность'],
-])
-const colors = new Map([
-    ['idea', '#FFD166'],
-    ['nice', '#4DCCBD'],
-    ['problem', '#F25C63'],
 ])
 
 setup(async () => {
@@ -32,15 +26,6 @@ setup(async () => {
 
 on('install', async event => {
     overlay([
-        // ['@', 'top-left', [
-        //     ['button', { icon: 'arrow-left', href: PERMALINK }],
-        //     // ['html', {
-        //     //     html: '<a style="background:white;padding:2px 5px;" href="https://берегурай.рф">← на сайт берегурай.рф</a>',
-        //     // }],
-        // ]],
-        //['@', 'top-center', [
-        //    ['html', { html: '<h1 style="margin:0;">Верхняя Тура</h1>' }],
-        //]],
         ['@', 'right-center', [
             ['button', { icon: 'question', command: 'ShowHelp' }],
         ]],
@@ -54,17 +39,17 @@ on('idle', async event => {
         ['AddIdea', {
             label: 'Предложить идею',
             icon: 'bulb',
-            color: colors.get('idea'),
+            color: '#FFD166',
         }],
-        ['AddNice', {
+        ['AddAttraction', {
             label: 'Описать ценность',
             icon: 'like',
-            color: colors.get('nice'),
+            color: '#4DCCBD',
         }],
         ['AddProblem', {
             label: 'Описать проблему',
             icon: 'dislike',
-            color: colors.get('problem'),
+            color: '#F25C63',
         }],
     ], {
         foldedLabel: 'Добавить',
@@ -112,20 +97,6 @@ command("AddIdea", async ctx => {
         title: 'Идея',
         placeholder: 'Опишите свою идею...',
         label: 'Комментарий',
-        categories: [
-            'Природа и река',
-            'Доступная среда',
-            'Отдых и досуг детей',
-            'Отдых и досуг подростков',
-            'Отдых и досуг старшего возраста',
-            'Отдых и досуг взрослых',
-            'Зимний досуг',
-            'Туризм',
-            'Культурные мероприятия',
-            'Магазины и кафе',
-            'Пешеходная инфраструктура',
-            'Другое',
-        ]
     })
 })
 
@@ -135,35 +106,15 @@ command("AddProblem", async ctx => {
         title: 'Проблема',
         placeholder: 'Опишите проблему...',
         label: 'Комментарий',
-        categories: [
-            'Транспорт и дороги',
-            'Мусор и загрязнение',
-            'Доступная среда',
-            'Площадки для отдыха',
-            'Озеленение',
-            'Безопасность',
-            'Пешеходная инфраструктура',
-            'Визуальный мусор',
-            'Река',
-            'Другое',
-        ]
     })
 })
 
-command("AddNice", async ctx => {
+command("AddAttraction", async ctx => {
     return AddFeature({
         type: 'nice',
         title: 'Ценность',
         placeholder: 'Расскажите свою историю...',
         label: 'Комментарий',
-        categories: [
-            'Природа и виды',
-            'Воспоминания',
-            'Значимые события',
-            'Архитектура',
-            'Любимые места',
-            'Другое',
-        ]
     })
 })
 
@@ -173,15 +124,15 @@ command("ShowHelp", () => {
 
 async function showHelp() {
     const text = `
-# Набережная Верхнетуринского пруда: от площади до ул. Молодцова
+# Верхняя Тура
 
-Поделиться своим мнением просто: выберите отметку идею, проблему или ценность, затем укажите точку на карте и напишите свой комментарий во всплывающем окне.
+Поделиться своим мнением просто: выберите отметку — идею, проблему или ценность, затем укажите точку на карте и напишите свой комментарий во всплывающем окне.
 
-**Идеи и предложения:** Что может появиться на берегу пруда? Чего вам здесь не хватает?
+Идеи и предложения: Что может появиться на улице? Чего здесь не хватает?
 
-**Проблемы:** Что вас беспокоит на набережной.
+Проблемы: Обычно их много. И их важно обозначить. Не стесняйтесь, отмечайте главные.
 
-**Ценности:** Важные и любимые вами элементы, которые нужно сохранить или восстановить (исторические территории, интересные события, растительный и животный мир набережной/пруда).
+Ценности: Важные и любимые вами места, объекты или события, которые нужно сохранить или восстановить (исторические, культурные, уникальные).
 	`
     const md = new markdownit()
     const html = md.render(text)
@@ -194,7 +145,7 @@ async function showHelp() {
     })
 }
 
-async function AddFeature({ type, title, placeholder, label, categories }) {
+async function AddFeature({ type, title, placeholder, label }) {
     const mobile = await requestState('layout.mobile')
     const info = mobile
         ? 'Добавте точку на карте'
@@ -205,28 +156,41 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     const coord = await requestPoint(info2, info)
     // const coord = await requestPoint('Кликни по карте', 'что-то произойдет')
 
-    // const before = !categories ? [] : [
-    //     ['category', ['select', { label: 'Категория' },
-    //         categories.map(value => ['option', { value }])
-    //     ]]
-    // ]
-    const before = []
-    const form = await requestInput([
-        ...before,
+    const categories = [
+        'Жилой квартал',
+        'Досуг и отдых',
+        'Бизнес',
+        'Промышленность',
+        'Леса, парки',
+        'Спорт',
+        'Экология',
+        'Культурная ценность',
+        'Транспорт',
+        'Инфраструктура',
+        'Архитектура',
+        'Благоустройство',
+        'Общество',
+        'Другое',
+    ]
 
+
+    const form = await requestInput([
+        //['category', ['select', { label: 'Категория' },
+        //    categories.map(value => ['option', { value }])
+        //]],
         ['comment', ['text', {
             label,
             placeholder,
             required: 'Вы забыли оставить коментарий',
             rows: 12,
         }]],
-        // ['contact', ['input', {
-        //     label: 'Присоединяйтесь к проекту, оставьте ваши имя, e-mail, телефон или социальные сети (по желанию)',
-        //     placeholder: 'имя, e-mail, телефон, соцсети',
-        //     // pattern: {
-        //     //        value: /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i,
-        //     //        message: "invalid email address"
-        //     //    }
+        // ['email', ['input', {
+        // 	label: 'EMAIL',
+        // 	placeholder: 'Расскажите свою email...',
+        // 	// pattern: {
+        //  //        value: /^([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})?$/i,
+        //  //        message: "invalid email address"
+        //  //    }
         // }]],
     ], {
         title,
@@ -237,8 +201,6 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     const date = new Date()
     const properties = {
         comment: form.comment,
-        // category: form.category,
-        // contact: form.contact,
         dateAdded: date.toString(),
         type,
     }
@@ -258,7 +220,7 @@ async function AddFeature({ type, title, placeholder, label, categories }) {
     }
 
     await addFeatures(f, {
-        layerId: LAYER_ID,
+        sourceId: SOURCE_ID,
     })
 }
 
