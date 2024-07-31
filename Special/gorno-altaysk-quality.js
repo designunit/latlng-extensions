@@ -63,7 +63,7 @@ on('feature.select', async event => {
         .keys(feature.properties)
         .filter(key => feature.properties[key] !== undefined) // take only set values
         .map(key => ({
-            key: keys.get(key),
+            key,
             value: ` ${feature.properties[key]} `,
         }))
     await showMapPopup(feature.geometry.coordinates, ['kv', { data }])
