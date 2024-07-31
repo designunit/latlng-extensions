@@ -47,7 +47,7 @@ on('idle', async event => {
 
 on('feature.select', async event => {
     const featureId = event.data.featureId
-    const layerId = event.data.layerId
+    const sourceId = event.data.layerId
     if (!featureId) {
         return
     }
@@ -58,12 +58,54 @@ on('feature.select', async event => {
     const feature = fc.features[0]
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
+    
+    const viz = new Map([
+        ['viz1', 'Контекст, окружение'],
+        ['viz2', 'Колористика фасадов'],
+        ['viz3', 'Состояние фасадов'],
+        ['viz4', 'Территория'],
+        ['viz5', 'Достаточность освещенности'],
+        ['viz6', 'Разнофункциональность освещение'],
+        ['viz7', 'Достаточность озеленения'],
+        ['viz8', 'Разнообразие озеленения'],
+        ['viz9', 'Визуальный мусор'],
+        ['viz10', 'Признаки вандализма'],
+        ['viz11', 'Навигация'],
+        ['viz12', 'Чистота'],
+        ['viz13', 'Шум'],
+        ['viz14', 'Запах'],
+        ['viz15', 'Запаркованность'],
+        ['viz16', 'Ливневка'],
+        ['viz17', 'Безбарьерная среда'],
+        ['viz18', 'Моральное состояние'],
+        ['viz19', 'Дух места'],
+        ['viz20', 'Общее ощущение'],
+    ])
+    const tec = new Map([
+        ['tec1', 'Состояние фасадов'],
+        ['tec2', 'Состояние элементов фасадов'],
+        ['tec3', 'Состояние территории'],
+        ['tec4', 'Покрытие'],
+        ['tec5', 'Оборудование'],
+        ['tec6', 'Ограждения'],
+        ['tec7', 'Освещение'],
+        ['tec8', 'Озеленение'],
+        ['tec9', 'Отвод воды'],
+        ['tec10', 'Актуальность функционала'],
+        ['tec11', 'Моральное состояние'],
+        ['tec12', 'Общее ощущение'],
+        ['tec15', 'Микроклиматический комфорт'],
+        ['tec16', 'Сост клим. элементов'],
+    ])
+    const keys = sourceId === SOURCE_ID_TEC ? tec : viz
+    
     const data = Object
         .keys(feature.properties)
         .filter(key => /^viz[\d]+$/.test(key) || /^tec[\d]+$/.test(key)) // take only vizXX or tecXX
+        .filter(key => feature.properties[key] !== undefined) // take only set values
         .map(key => ({
-            key,
-            value: feature.properties[key] ?? "<unset>",
+            key: keys.get(key),
+            value: ` ${feature.properties[key]} `,
         }))
     await showMapPopup(feature.geometry.coordinates, ['kv', { data }])
 })
