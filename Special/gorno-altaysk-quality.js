@@ -32,15 +32,15 @@ on('install', async event => {
 
 on('idle', async event => {
     await toolbar([
-        ['AddVis', {
+        ['AddViz', {
             icon: 'plus',
             label: 'Виз',
-            //color: '#FFD166',
+            color: '#ff006c',
         }],
         ['AddTec', {
             icon: 'plus',
             label: 'Тех',
-            //color: '#FFD166',
+            color: '#008fff',
         }],
     ], {
         //foldedLabel: 'Добавить',
