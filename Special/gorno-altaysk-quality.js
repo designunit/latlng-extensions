@@ -154,7 +154,7 @@ async function AddFeature() {
         : 'Кликните по карте'
     const coord = await requestPoint(info2, info)
 
-    const title = 'Активность'
+    const title = 'Технический анализ'
     const form = await requestInput([
         ['q1', ['number', { min: -2, max: 2, label: 'Общее состояние фасадов' }]],
         ['q2', ['number', { min: -2, max: 2, label: 'Общее состояние элементов фасадов' }]],
