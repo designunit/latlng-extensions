@@ -1,5 +1,3 @@
-importScripts('https://unpkg.com/typograf@6.11.0/dist/typograf.js')
-importScripts('https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js')
 importScripts('/latlng.js')
 
 const SOURCE_ID_TEC = '66a989ad8d63e8000821dcc8'
@@ -48,66 +46,23 @@ on('idle', async event => {
 })
 
 on('feature.select', async event => {
-    return
     const featureId = event.data.featureId
     const layerId = event.data.layerId
     if (!featureId) {
         return
     }
-
     const fc = await requestFeatures([featureId])
-
     const feature = fc.features[0]
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
-
-    const title = 'Активность'
-    const static = feature.properties['static']
-    const moving = feature.properties['moving']
-    const groupSize = feature.properties['groupSize']
-    const comment = feature.properties['comment']
-    const male = feature.properties['male']
-    const female = feature.properties['female']
-    const child = feature.properties['child']
-
-    const md = new markdownit()
-    const raw = md.render([
-        `# ${title}`,
-        comment
-    ].join('\n\n'));
-
-    const tp = new Typograf({ locale: ['ru', 'en-US'] })
-    const html = tp.execute(
-        raw
-    )
-
-    function getValue(value) {
-        if (Array.isArray(value)) {
-            return value.join(', ')
-        }
-
-        return value
-    }
-
-    await showMapPopup(feature.geometry.coordinates, ['kv', {
-        data: [
-            { key: 'Количество', value: groupSize },
-            { key: 'М', value: getValue(male) },
-            { key: 'Ж', value: getValue(female) },
-            { key: 'Ребенок', value: getValue(child) },
-
-            { key: 'Занятия', value: getValue(static) },
-            { key: 'Движение', value: getValue(moving) },
-
-            { key: 'Комментарий', value: comment },
-        ].filter(({ value }) => Boolean(value))
-    }])
-
-    // await showMapPopup(feature.geometry.coordinates, ['html', {
-    //     html, style: {
-    //         padding: 16,
-    //     }
-    // }])
+    const data = Object
+        .keys(feature.properties)
+        .filter(key => /^viz[\d]+]$/.test(key) || /^tec[\d]+]$/.test(key)) // take only vizXX or tecXX
+        .map(key => ({
+            key,
+            value: feature.properties[key] ?? "<unset>",
+        }))
+    await showMapPopup(feature.geometry.coordinates, ['kv', { data }])
 })
 
 command("AddViz", async ctx => {
