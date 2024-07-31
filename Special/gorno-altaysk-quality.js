@@ -52,12 +52,15 @@ on('feature.select', async event => {
         return
     }
     const fc = await requestFeatures([featureId])
+    if (fc.features.length === 0) {
+        return
+    }
     const feature = fc.features[0]
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
     const data = Object
         .keys(feature.properties)
-        .filter(key => /^viz[\d]+]$/.test(key) || /^tec[\d]+]$/.test(key)) // take only vizXX or tecXX
+        .filter(key => /^viz[\d]+$/.test(key) || /^tec[\d]+$/.test(key)) // take only vizXX or tecXX
         .map(key => ({
             key,
             value: feature.properties[key] ?? "<unset>",
