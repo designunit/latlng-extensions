@@ -59,8 +59,10 @@ on('feature.select', async event => {
     const geometryType = feature.geometry.type
     assert(geometryType !== 'Point', new Error('Selected feature is not a point'))
     
+    const exclude = new Set(["id", "dateAdded"])    
     const data = Object
         .keys(feature.properties)
+        .filter(key => !exclude.has(key)) // skip excluded records
         .filter(key => feature.properties[key] !== undefined) // take only set values
         .map(key => ({
             key,
