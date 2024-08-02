@@ -11,6 +11,13 @@ const rating = [
     ['option', { value: '-2' }],
 ]
 
+function title(title) {
+    return [
+        title,
+        '(Где 2-отл, 1-хор, 0-терпимо, -1 — плохо, -2 — ужасно)',
+    ].join('\n')
+}
+
 setup(async () => {
     // const layerId = await requestLayer({
     // 	geometryTypes: ['Point']
@@ -72,7 +79,7 @@ on('feature.select', async event => {
 })
 
 command("AddViz", async ctx => {
-    return AddFeature('Визуально-Эстетический', SOURCE_ID_VIZ, [
+    return AddFeature(title('Визуально-Эстетический'), SOURCE_ID_VIZ, [
         ['Контекст',                         ['select', { label: 'Контекст, окружение (насколько территория, здания вокруг, ландшафт соответствуют друг другу, являются единым целым)' }, rating]],
         ['Колористика фасадов',              ['select', { label: 'Колористика фасадов, объектов окружающих территорию (хаотичность, отсутствие единого образа, единого цветовой палитры)' }, rating]],
         ['Состояние фасадов',                ['select', { label: 'Состояние фасадов и фасадных элементов окружающих территорию (балконы, оконные и дверные заполнения, пристройки)' }, rating]],
@@ -98,7 +105,7 @@ command("AddViz", async ctx => {
 })
 
 command("AddTec", async ctx => {
-    return AddFeature('Технический анализ', SOURCE_ID_TEC, [
+    return AddFeature(title('Технический анализ'), SOURCE_ID_TEC, [
         ['Состояние фасадов',            ['select', { label: 'Общее состояние фасадов' }, rating]],
         ['Состояние элементов фасадов',  ['select', { label: 'Общее состояние элементов фасадов' }, rating]],
         ['Состояние территории',         ['select', { label: 'Общее состояние территории' }, rating]],
