@@ -183,7 +183,7 @@ async function AddFeature({ type, title, placeholder, label }) {
             age.map(value => ['option', { value }])
         ]],
         ['gender', ['select', { label: 'Ваш пол' },
-            age.map(value => ['option', { value }])
+            gender.map(value => ['option', { value }])
         ]],
         // ['chidren', ['select', { label: 'Наличие детей (до 18 лет)?' }, [
         //     ['option', { value: 'Есть' }],
