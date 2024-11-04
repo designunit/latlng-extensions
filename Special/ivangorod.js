@@ -2,7 +2,7 @@ importScripts('https://unpkg.com/typograf@6.11.0/dist/typograf.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js')
 importScripts('/latlng.js')
 
-const SOURCE_ID = '67223dba7f547b06135ea4e3'
+const SOURCE_ID = '67294ca3a0d090292a5e4b97'
 
 const typeLabel = new Map([
     ['idea', 'Идея'],
